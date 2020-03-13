@@ -1,7 +1,5 @@
 <template>
-  <div class="app">阿萨德奥术大师
-    <button>daassasddsasd</button>
-    <button>德aaasdsasadzxcsdasdaszxxaasdssddassd</button>
+  <div class="app">
     <transition name="fade">
       <router-view />
     </transition>

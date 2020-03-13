@@ -50,7 +50,7 @@ function render (req, res) {
     };
 
     const context = {
-        title: 'Vue HN 2.0', // default title
+        title: '凌风的个人博客',
         url: req.url
     };
     renderer.renderToString(context, (err, html) => {

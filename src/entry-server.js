@@ -33,6 +33,3 @@ export default context => {
         }, reject);
     });
 };
-if (module.hot) {
-    module.hot.accept();
-}
