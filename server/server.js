@@ -64,6 +64,8 @@ function render (req, res) {
     });
 }
 
+app.use(express.static('dist/client', { maxAge: 1000000 }));
+
 
 app.get('*', isProd ? render : (req, res) => {
     console.log('771asd');
