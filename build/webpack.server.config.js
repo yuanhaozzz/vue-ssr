@@ -17,7 +17,7 @@ module.exports = merge(baseConfig, {
     target: 'node',
     // 此处告知 server bundle 使用 Node 风格导出模块(Node-style exports)
     output: {
-        path: findToFilePath('../dist/server'),
+        path: findToFilePath('../dist/server/blog'),
         // filename: 'server',
         libraryTarget: 'commonjs2'
     },

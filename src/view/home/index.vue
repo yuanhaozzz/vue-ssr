@@ -1,37 +1,50 @@
 <template>
-  <div>
-    么么哒，亲爱的
+  <div class="home-wrapper">
+    <!-- 轮播图 推荐文章 -->
+    <section>
+      <Header></Header>
+    </section>
+    <!-- 最新推荐 -->
+    <section>
+      <HotRecommend></HotRecommend>
+    </section>
+    <!-- 最新文章 热门文章 -->
+    <section>
+      <ArticleList></ArticleList>
+    </section>
   </div>
 </template>
 
 <script>
+import Header from './component/Header'
+import HotRecommend from './component/HotRecommend'
+import ArticleList from './component/ArticleList'
 
 export default {
-  asyncData ({ store, route }) {
-    // 触发 action 后，会返回 Promise
-    return store.dispatch('fetchItem', route.params.id)
-  },
+  //   asyncData ({ store, route }) {
+  //     // 触发 action 后，会返回 Promise
+  //     return store.dispatch('fetchItem', route.params.id)
+  //   },
   data: () => {
     return {
-      a: '卧室asd啊'
     }
   },
   methods: {
-    handle: function () {
-      alert(1)
-    }
+
   },
-  computed: {
-    // 从 store 的 state 对象中的获取 item。
-    item () {
-      return this.$store.state.items
-    }
+  components: {
+    Header,
+    HotRecommend,
+    ArticleList
   }
 }
 </script>
 
-<style lang="less">
-h1 {
-  color: pink;
+<style lang="less" scope>
+.home-wrapper {
+  width: 1000px;
+  border-radius: 18px;
+  background: #f8f6f2;
+  padding: 10px 0;
 }
 </style>

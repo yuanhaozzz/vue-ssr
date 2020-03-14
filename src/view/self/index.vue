@@ -1,5 +1,5 @@
 <template>
-  <div>我是测试asdadssas</div>
+  <div>self</div>
 </template>
 
 <script>

@@ -38,5 +38,5 @@ router.onReady(() => {
         }).catch(next);
     });
 
-    app.$mount('.app');
+    app.$mount('#app');
 });

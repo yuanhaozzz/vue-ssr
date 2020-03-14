@@ -24,8 +24,8 @@ function createRenderer (bundle, options) {
 
 if (isProd) {
     // 打包好的服务器文件
-    let serverBundle = require('../dist/server/vue-ssr-server-bundle.json');
-    let clientManifest = require('../dist/client/vue-ssr-client-manifest.json');
+    let serverBundle = require('../dist/server/blog/vue-ssr-server-bundle.json');
+    let clientManifest = require('../dist/client/blog/vue-ssr-client-manifest.json');
     let template = fs.readFileSync(templatePath, 'utf-8');
     renderer = createRenderer(serverBundle, {
         template,
@@ -72,6 +72,7 @@ function render (req, res) {
 }
 
 app.use(express.static('dist/client', { maxAge: 1000000 }));
+app.use(express.static('dist/server', { maxAge: 1000000 }));
 
 
 app.get('*', isProd ? render : (req, res) => {

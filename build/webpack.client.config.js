@@ -11,10 +11,10 @@ module.exports = merge(config, {
     target: 'web',
     devtool: false,
     output: {
-        path: findToFilePath('../dist/client'),
+        path: findToFilePath('../dist/client/blog'),
         filename: 'js/[name].[contenthash:8].js',
         chunkFilename: 'js/[name].[contenthash:8].chunk.js',
-        publicPath: '/'
+        publicPath: '/blog/'
     },
     plugins: isProd
         ? [
