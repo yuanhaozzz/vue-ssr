@@ -15,7 +15,7 @@ const readFile = (fs, file, type = 'client') => {
     } catch (e) { }
 };
 
-module.exports = function devServer (app, cb) {
+module.exports = function devServer (app, templatePath, cb) {
     let bundle;
     let template;
     let clientManifest;
@@ -31,7 +31,6 @@ module.exports = function devServer (app, cb) {
             });
         }
     };
-    let templatePath = resolve('../public/template.html');
     template = fs.readFileSync(templatePath, 'utf-8');
     chokidar.watch(templatePath).on('change', () => {
         template = fs.readFileSync(templatePath, 'utf-8');
@@ -52,7 +51,7 @@ module.exports = function devServer (app, cb) {
     // 放入编译结果
     const devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
         publicPath: clientConfig.output.publicPath,
-        noInfo: false
+        noInfo: true
     });
 
     // 使用中间件

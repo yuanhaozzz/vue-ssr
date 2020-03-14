@@ -2,16 +2,23 @@ let express = require('express');
 let app = express();
 let fs = require('fs');
 let path = require('path');
+const LRU = require('lru-cache');
 const { createBundleRenderer } = require('vue-server-renderer');
-
 let isProd = process.env.NODE_ENV === 'production';
 let resolve = pathname => path.resolve(__dirname, pathname);
+let templatePath = resolve('../public/template.html');
 
 let renderer, readyPromise;
 
 function createRenderer (bundle, options) {
     return createBundleRenderer(bundle, Object.assign(options, {
-        runInNewContext: false, // 推荐
+        // 推荐
+        runInNewContext: false,
+        // 用于组件缓存
+        cache: new LRU({
+            max: 1000,
+            maxAge: 1000 * 60 * 15
+        }),
     }));
 }
 
@@ -19,13 +26,13 @@ if (isProd) {
     // 打包好的服务器文件
     let serverBundle = require('../dist/server/vue-ssr-server-bundle.json');
     let clientManifest = require('../dist/client/vue-ssr-client-manifest.json');
-    let template = fs.readFileSync(resolve('../dist/client/template.html'), 'utf-8');
+    let template = fs.readFileSync(templatePath, 'utf-8');
     renderer = createRenderer(serverBundle, {
         template,
         clientManifest
     });
 } else {
-    readyPromise = require('./devServer')(app, (bundle, options) => {
+    readyPromise = require('./devServer')(app, templatePath, (bundle, options) => {
         renderer = createRenderer(bundle, options);
     });
 }
@@ -68,7 +75,6 @@ app.use(express.static('dist/client', { maxAge: 1000000 }));
 
 
 app.get('*', isProd ? render : (req, res) => {
-    console.log('771asd');
     readyPromise.then(() => render(req, res));
 });
 

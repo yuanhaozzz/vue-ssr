@@ -1,6 +1,6 @@
 {
     "apps": {
-        "name": "vue-ssr-client-test",
+        "name": "vue-ssr-client-pc",
         "script": "server/server.js",
         "cwd": "./",
         "args": "",

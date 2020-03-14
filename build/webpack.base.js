@@ -63,20 +63,22 @@ module.exports = {
                     }
                 ]
             },
-            isProd ? {
-                test: /\.js$/,
-                loader: 'eslint-loader',
-                enforce: "pre",
-                include: [path.resolve(__dirname, '../src')], // 指定检查的目录
-            } : {}
+            isProd
+                ? {}
+                : {
+                    test: /\.js$/,
+                    loader: 'eslint-loader',
+                    enforce: "pre",
+                    include: [path.resolve(__dirname, '../src')], // 指定检查的目录
+                }
         ]
     },
-    // stats: {
-    //     assets: isProd ? true : false,
-    //     builtAt: false,
-    //     modules: false,
-    //     entrypoints: false
-    // },
+    stats: {
+        assets: isProd ? true : false,
+        builtAt: false,
+        modules: false,
+        entrypoints: false
+    },
     plugins: [
         new VueLoaderPlugin(),
         // 提供全局变量，这样不需要每次导入   import React from 'react'   等等！
