@@ -39,7 +39,7 @@ module.exports = function devServer (app, templatePath, cb) {
 
 
     // 修改client配置
-    clientConfig.entry.app = ['webpack-hot-middleware/client', clientConfig.entry.app[1]];
+    clientConfig.entry.app = ['webpack-hot-middleware/client', '@babel/polyfill', clientConfig.entry.app[1]];
     clientConfig.output.filename = '[name].js';
     clientConfig.plugins.push(
         new webpack.HotModuleReplacementPlugin(),
