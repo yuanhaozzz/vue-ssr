@@ -1,63 +1,100 @@
 <template>
-  <div class="hot-article-wrapper">
-    <TitleStyle icon="/blog/public/images/hot.png"
-                title="热门文章">
-      <ul class="hot-article-cotainer">
-        <li v-for="(item, index) of list"
-            class="flex-start"
-            :key="index">
-          <i></i>
-          {{item.title}}
-        </li>
-      </ul>
-    </TitleStyle>
-  </div>
+    <div class="hot-article-wrapper">
+        <div class="hot-article-title">
+            <h3>热门文章</h3>
+        </div>
+        <ul class="hot-article-cotainer">
+            <li
+                v-for="(item, index) of hotList"
+                @click="jumpToDetail(item)"
+                class="flex-start"
+                :key="index"
+            >
+                <div
+                    :class="{
+                        first: index === 0,
+                        second: index === 1,
+                        third: index === 2
+                    }"
+                >
+                    {{ index + 1 }}
+                </div>
+                <p>
+                {{ item.title }}
+                </p>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script>
-import TitleStyle from './TitleStyle'
 export default {
-  data: () => {
-    return {
-      list: [
-        { title: '我很想打扰你 可是没有话题也没有勇气' },
-        { title: '我很想打扰你 可是没有话题也没有勇气' },
-        { title: '我很想打扰你 可是没有话题也没有勇气' },
-        { title: '我很想打扰你 可是没有话题也没有勇气' },
-        { title: '我很想打扰你 可是没有话题也没有勇气' },
-        { title: '我很想打扰你 可是没有话题也没有勇气' },
-        { title: '我很想打扰你 可是没有话题也没有勇气' },
-        { title: '我很想打扰你 可是没有话题也没有勇气' },
-      ]
+    props: {
+        hotList: {
+            type: Array,
+            default: () => []
+        }
+    },
+    methods: {
+        /**
+         * 跳转详情
+         * @param {Object} item 当前数据
+         */
+        jumpToDetail(item) {
+            window.open(`/article/detail?id=${item.id}`);
+        }
     }
-  },
-  components: {
-    TitleStyle
-  }
-}
+};
 </script>
 
 <style lang="less" scoped>
 .hot-article-wrapper {
-  padding-left: 10px;
-  .hot-article-cotainer {
-    li {
-      font-size: 14px;
-      height: 33px;
-      line-height: 33px;
-      border-bottom: 1px solid #eee;
-      cursor: pointer;
-      i {
-        width: 5px;
-        height: 5px;
-        background-color: #996c39;
-        border-radius: 30px;
-        margin-right: 15px;
-      }
+    padding-left: 10px;
+    .hot-article-title {
+        font-size: 16px;
+        font-weight: bold;
+        padding-bottom: 5px;
+        border-bottom: #ccc 1px solid;
+        color: #5d5d5d;
     }
-    li:hover {
-      color: #f26868;
+    .hot-article-cotainer {
+        li {
+            font-size: 14px;
+            height: 33px;
+            line-height: 33px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            color: #838383;
+            div {
+                margin-right: 10px;
+                width: 20px;
+                height: 15px;
+                background-color: #555;
+                text-align: center;
+                font-size: 12px;
+                line-height: 15px;
+                color: #fff;
+            }
+            p{
+                width:90%;
+                overflow: hidden;
+                text-overflow:ellipsis;
+                white-space: nowrap;
+
+            }
+            .first {
+                background-color: #ff3300;
+            }
+            .second {
+                background-color: #f60;
+            }
+            .third {
+                background-color: #f90;
+            }
+        }
+        li:hover {
+            color: #f26868;
+        }
     }
-  }
 }
 </style>

@@ -10,16 +10,19 @@ let templatePath = resolve('../public/template.html');
 
 let renderer, readyPromise;
 
-function createRenderer (bundle, options) {
-    return createBundleRenderer(bundle, Object.assign(options, {
-        // 推荐
-        runInNewContext: false,
-        // 用于组件缓存
-        cache: new LRU({
-            max: 1000,
-            maxAge: 1000 * 60 * 15
-        }),
-    }));
+function createRenderer(bundle, options) {
+    return createBundleRenderer(
+        bundle,
+        Object.assign(options, {
+            // 推荐
+            runInNewContext: false,
+            // 用于组件缓存
+            cache: new LRU({
+                max: 1000,
+                maxAge: 1000 * 60 * 15
+            })
+        })
+    );
 }
 
 if (isProd) {
@@ -32,16 +35,18 @@ if (isProd) {
         clientManifest
     });
 } else {
-    readyPromise = require('./devServer')(app, templatePath, (bundle, options) => {
-        renderer = createRenderer(bundle, options);
-    });
+    readyPromise = require('./devServer')(
+        app,
+        templatePath,
+        (bundle, options) => {
+            renderer = createRenderer(bundle, options);
+        }
+    );
 }
 
-
-function render (req, res) {
+function render(req, res) {
     const s = Date.now();
-    res.setHeader("Content-Type", "text/html");
-    // res.setHeader("Server", serverInfo);
+    res.setHeader('Content-Type', 'text/html');
 
     const handleError = err => {
         if (err.url) {
@@ -55,10 +60,11 @@ function render (req, res) {
             console.error(err.stack);
         }
     };
-
+    console.log(req.query, '----');
     const context = {
         title: '凌风的个人博客',
-        url: req.url
+        url: req.url,
+        query: req.query
     };
     renderer.renderToString(context, (err, html) => {
         if (err) {
@@ -74,13 +80,15 @@ function render (req, res) {
 app.use(express.static('dist/client', { maxAge: 1000000 }));
 app.use(express.static('dist/server', { maxAge: 1000000 }));
 
-
-app.get('*', isProd ? render : (req, res) => {
-    readyPromise.then(() => render(req, res));
-});
-
+app.get(
+    '*',
+    isProd
+        ? render
+        : (req, res) => {
+              readyPromise.then(() => render(req, res));
+          }
+);
 
 app.listen(3001, () => {
     console.warn('start 3001');
 });
-
