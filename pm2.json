@@ -1,16 +1,13 @@
 {
     "apps": {
-        "name": "vue-ssr-client-pc",
+        "name": "vue-ssr-3001",
         "script": "server/server.js",
         "cwd": "./",
         "args": "",
         "interpreter": "",
         "interpreter_args": "",
         "watch": false,
-        "ignore_watch": [
-            "node_modules",
-            "logs"
-        ],
+        "ignore_watch": ["node_modules", "logs"],
         "exec_mode": "fork_mode",
         "instances": 1,
         "max_memory_restart": "500M",
