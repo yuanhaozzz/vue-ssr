@@ -11,9 +11,9 @@ class Api {
     initAxios() {
         this.instance = axios.create({
             baseURL:
-                process.env.NODE_ENV === 'development'
-                    ? 'http://localhost:3003/server'
-                    : 'http://yuanhao-web.cn/server',
+                process.env.NODE_ENV === 'production'
+                    ? 'http://yuanhao-web.cn/server'
+                    : 'http://localhost:3003/server',
             timeout: 6000,
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
