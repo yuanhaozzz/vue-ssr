@@ -18,6 +18,7 @@ let ShareDay = () => import('@/view/wechar/ShareLiChao');
 export function createRouter() {
     return new Router({
         mode: 'history',
+        base: 'blog',
         routes: [
             {
                 path: '/',
