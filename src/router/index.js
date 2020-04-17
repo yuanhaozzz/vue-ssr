@@ -18,14 +18,13 @@ let ShareDay = () => import('@/view/wechar/ShareLiChao');
 export function createRouter() {
     return new Router({
         mode: 'history',
-        base: 'blog',
         routes: [
             {
                 path: '/',
-                redirect: '/client/home'
+                redirect: '/blog/client/home'
             },
             {
-                path: '/client',
+                path: '/blog/client',
                 component: Layout,
                 children: [
                     {
@@ -55,11 +54,11 @@ export function createRouter() {
                 ]
             },
             {
-                path: '/article/detail',
+                path: '/blog/article/detail',
                 component: ArticleDetail
             },
             {
-                path: '/share/day',
+                path: '/blog/share/day',
                 component: ShareDay
             }
         ]
