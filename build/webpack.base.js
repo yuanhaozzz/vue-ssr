@@ -44,14 +44,6 @@ module.exports = {
                     'less-loader',
                 ],
             },
-            // {
-            //     test: /\.(png|jpg|gif|svg)$/,
-            //     loader: 'file-loader',
-            //     options: {
-            //         name: '[name].[ext]?[hash]',
-            //         public: 'blog/',
-            //     },
-            // },
             {
                 test: /\.(png|woff|woff2|eot|ttf|svg|jpg|gif|svg)$/,
                 use: [
@@ -66,6 +58,7 @@ module.exports = {
                                 return '[name]_[hash:8].[ext]';
                             },
                             outputPath: 'images/',
+                            publicPath: '/blog/images',
                         },
                     },
                 ],
