@@ -38,7 +38,7 @@ export default {
          * @param {Object} item 当前数据
          */
         jumpToDetail(item) {
-            window.open(`/article/detail?id=${item.id}`);
+            window.open(`/blog/article/detail?id=${item.id}`);
         },
     },
 };
@@ -63,13 +63,14 @@ export default {
             }
             .recommend-list-item-description {
                 margin-left: 10px;
+                flex: 1;
                 h4 {
                     color: #838383;
                     margin-bottom: 10px;
                 }
                 .recommend-list-item-description-time {
                     padding-left: 30px;
-                    background: url(/blog/public/images/calendar.png) no-repeat
+                    background: url('~@/assets/images/calendar.png') no-repeat
                         left center;
                     background-size: 20px 20px;
                 }

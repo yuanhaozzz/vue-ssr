@@ -3,11 +3,16 @@
         <header class="header"></header>
         <nav class="nav flex-center">
             <ul class="flex-start">
-                <li :class="{'flex-center': true, 'select': selectIndex === index}"
+                <li
+                    :class="{
+                        'flex-center': true,
+                        select: selectIndex === index,
+                    }"
                     @click="handleJumpToRouter(item, index)"
                     v-for="(item, index) of navList"
-                    :key="index">
-                    {{item.name}}
+                    :key="index"
+                >
+                    {{ item.name }}
                 </li>
             </ul>
         </nav>
@@ -16,7 +21,6 @@
                 <router-view />
             </transition>
         </section>
-
     </div>
 </template>
 <script>
@@ -24,25 +28,25 @@ export default {
     data: () => {
         return {
             navList: [
-                { name: '首页', routePath: '/client/home' },
-                { name: '文章', routePath: '/client/article' },
-                { name: '心情说说', routePath: '/client/mood' },
-                { name: '个人档', routePath: '/client/self' },
-                { name: '留言', routePath: '/client/message' },
+                { name: '首页', routePath: '/blog/client/home' },
+                { name: '文章', routePath: '/blog/client/article' },
+                { name: '心情说说', routePath: '/blog/client/mood' },
+                { name: '个人档', routePath: '/blog/client/self' },
+                { name: '留言', routePath: '/blog/client/message' },
             ],
-            selectIndex: 0
-        }
+            selectIndex: 0,
+        };
     },
     methods: {
-        handleJumpToRouter (item, index) {
-            let { routePath } = item
+        handleJumpToRouter(item, index) {
+            let { routePath } = item;
             this.$router.push({
-                path: routePath
-            })
-            this.selectIndex = index
-        }
-    }
-}
+                path: routePath,
+            });
+            this.selectIndex = index;
+        },
+    },
+};
 </script>
 <style lang="less">
 .layout-wrapper {
@@ -51,7 +55,7 @@ export default {
     padding-bottom: 50px;
     .header {
         height: 330px;
-        background: url(/blog/public/images/header-background.jpg) center 0
+        background: url('~@/assets/images/header-background.jpg') center 0
             scroll no-repeat;
     }
     .nav {

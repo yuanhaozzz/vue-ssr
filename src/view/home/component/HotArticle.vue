@@ -41,7 +41,7 @@ export default {
          * @param {Object} item 当前数据
          */
         jumpToDetail(item) {
-            window.open(`/article/detail?id=${item.id}`);
+            window.open(`/blog/article/detail?id=${item.id}`);
         }
     }
 };

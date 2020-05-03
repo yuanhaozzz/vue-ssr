@@ -7,30 +7,38 @@
                 <p>Recommend</p>
             </div>
             <ul class="article-now-list-container">
-                <li v-for="(item, index) of list.list"
+                <li
+                    v-for="(item, index) of list.list"
                     @click="jumpToDetail(item)"
-                    :key="index">
+                    :key="index"
+                >
                     <div class="flex-start list-item-bottom">
-                        <img :src="item.imageUrl"
-                             alt=""
-                             class="list-item-bottom-cover" />
+                        <img
+                            :src="item.imageUrl"
+                            alt=""
+                            class="list-item-bottom-cover"
+                        />
                         <div class="list-item-bottom-description">
                             <h3>{{ item.title }}</h3>
                             <p>{{ item.description }}</p>
-                            <div class="flex-space-between description-container">
+                            <div
+                                class="flex-space-between description-container"
+                            >
                                 <div class="tag-box tag-blog flex-start">
-                                    <img src="/blog/public/images/tag.png"
-                                         alt="" />
+                                    <img :src="tag" alt="" />
                                     <span>个人博客</span>
                                 </div>
                                 <div class="tag-box tag-time flex-start">
-                                    <img src="/blog/public/images/time.png"
-                                         alt="" />
-                                    <span> {{ item.releaseTime | format('yyyy-MM-dd') }}</span>
+                                    <img :src="time" alt="" />
+                                    <span>
+                                        {{
+                                            item.releaseTime
+                                                | format('yyyy-MM-dd')
+                                        }}</span
+                                    >
                                 </div>
                                 <div class="tag-box flex-start">
-                                    <img src="/blog/public/images/eye.png"
-                                         alt="" />
+                                    <img :src="eye" alt="" />
                                     <span>浏览 {{ item.pageViews }}</span>
                                 </div>
                             </div>
@@ -43,22 +51,32 @@
 </template>
 
 <script>
+import Tag from '@/assets/images/tag.png';
+import Time from '@/assets/images/time.png';
+import Eye from '@/assets/images/eye.png';
 export default {
     props: {
         list: {
             type: Object,
-            default: () => { }
-        }
+            default: () => {},
+        },
+    },
+    data: () => {
+        return {
+            tag: Tag,
+            time: Time,
+            eye: Eye,
+        };
     },
     methods: {
         /**
          * 跳转详情
          * @param {Object} item 当前数据
          */
-        jumpToDetail (item) {
-            window.open(`/article/detail?id=${item.id}`);
-        }
-    }
+        jumpToDetail(item) {
+            window.open(`/blog/article/detail?id=${item.id}`);
+        },
+    },
 };
 </script>
 

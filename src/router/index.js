@@ -21,7 +21,7 @@ export function createRouter() {
         routes: [
             {
                 path: '/',
-                redirect: '/blog/client/home'
+                redirect: '/blog/client/home',
             },
             {
                 path: '/blog/client',
@@ -29,38 +29,38 @@ export function createRouter() {
                 children: [
                     {
                         path: '',
-                        component: Home
+                        component: Home,
                     },
                     {
                         path: 'home',
-                        component: Home
+                        component: Home,
                     },
                     {
                         path: 'article',
-                        component: Article
+                        component: Article,
                     },
                     {
                         path: 'mood',
-                        component: Mood
+                        component: Mood,
                     },
                     {
                         path: 'self',
-                        component: Self
+                        component: Self,
                     },
                     {
                         path: 'message',
-                        component: Message
-                    }
-                ]
+                        component: Message,
+                    },
+                ],
             },
             {
                 path: '/blog/article/detail',
-                component: ArticleDetail
+                component: ArticleDetail,
             },
             {
                 path: '/blog/share/day',
-                component: ShareDay
-            }
-        ]
+                component: ShareDay,
+            },
+        ],
     });
 }
