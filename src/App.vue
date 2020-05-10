@@ -14,19 +14,19 @@ export default {
                 { name: '个人档', routePath: '/self' },
                 { name: '留言', routePath: '/message' },
             ],
-            selectIndex: 0
-        }
+            selectIndex: 0,
+        };
     },
     methods: {
-        handleJumpToRouter (item, index) {
-            let { routePath } = item
+        handleJumpToRouter(item, index) {
+            let { routePath } = item;
             this.$router.push({
-                path: routePath
-            })
-            this.selectIndex = index
-        }
-    }
-}
+                path: routePath,
+            });
+            this.selectIndex = index;
+        },
+    },
+};
 </script>
 <style lang="less">
 @import url(./assets/css/reset.less);
@@ -36,7 +36,7 @@ body,
     height: 100%;
 }
 #app {
-    overflow-y: scroll;
     position: relative;
+    font-family: 'microsoft yahei';
 }
 </style>

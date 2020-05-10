@@ -1,66 +1,32 @@
 // router.js
 import Vue from 'vue';
 import Router from 'vue-router';
+// 进度条
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+
+import Routes from './config';
 
 Vue.use(Router);
 
-let Layout = () => import('@/view/layout');
-let Home = () => import('@/view/home');
-let Article = () => import('@/view/article');
-let Mood = () => import('@/view/mood');
-let Self = () => import('@/view/self');
-let Message = () => import('@/view/message');
-// 文章详情
-let ArticleDetail = () => import('@/view/home/page/ArticleDetail');
-// 分享
-let ShareDay = () => import('@/view/wechar/ShareLiChao');
-
 export function createRouter() {
-    return new Router({
+    let createRoute = new Router({
         mode: 'history',
-        routes: [
-            {
-                path: '/',
-                redirect: '/blog/client/home',
-            },
-            {
-                path: '/blog/client',
-                component: Layout,
-                children: [
-                    {
-                        path: '',
-                        component: Home,
-                    },
-                    {
-                        path: 'home',
-                        component: Home,
-                    },
-                    {
-                        path: 'article',
-                        component: Article,
-                    },
-                    {
-                        path: 'mood',
-                        component: Mood,
-                    },
-                    {
-                        path: 'self',
-                        component: Self,
-                    },
-                    {
-                        path: 'message',
-                        component: Message,
-                    },
-                ],
-            },
-            {
-                path: '/blog/article/detail',
-                component: ArticleDetail,
-            },
-            {
-                path: '/blog/share/day',
-                component: ShareDay,
-            },
-        ],
+        routes: Routes,
     });
+    if (global.Window) {
+        NProgress.configure({
+            showSpinner: true,
+        });
+        createRoute.beforeEach((to, from, next) => {
+            NProgress.start();
+            next();
+        });
+        createRoute.afterEach(() => {
+            console.log('---');
+            NProgress.done();
+        });
+    }
+
+    return createRoute;
 }

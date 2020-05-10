@@ -1,12 +1,13 @@
 <template>
-  <div>self</div>
+    <div class="self-wrapper"></div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
+<style lang="less" scoped>
+.self-wrapper {
+    height: 100%;
+}
 </style>

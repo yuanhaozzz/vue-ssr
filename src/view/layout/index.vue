@@ -29,8 +29,6 @@ export default {
         return {
             navList: [
                 { name: '首页', routePath: '/blog/client/home' },
-                { name: '文章', routePath: '/blog/client/article' },
-                { name: '心情说说', routePath: '/blog/client/mood' },
                 { name: '个人档', routePath: '/blog/client/self' },
                 { name: '留言', routePath: '/blog/client/message' },
             ],
