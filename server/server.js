@@ -10,7 +10,7 @@ let templatePath = resolve('../public/template.html');
 
 let renderer, readyPromise;
 
-function createRenderer(bundle, options) {
+function createRenderer (bundle, options) {
     return createBundleRenderer(
         bundle,
         Object.assign(options, {
@@ -44,7 +44,7 @@ if (isProd) {
     );
 }
 
-function render(req, res) {
+function render (req, res) {
     const s = Date.now();
     res.setHeader('Content-Type', 'text/html');
 
@@ -62,7 +62,7 @@ function render(req, res) {
     };
     console.log(req.query, '----');
     const context = {
-        title: '凌风的个人博客',
+        title: '浩哥的个人博客',
         url: req.url,
         query: req.query
     };
