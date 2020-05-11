@@ -4,7 +4,7 @@
             <!-- 左侧栏 -->
             <main-left></main-left>
             <!-- 路由 -->
-            <section class="center-router">
+            <section class="center-router entry-center">
                 <transition name="translate">
                     <router-view></router-view>
                 </transition>
@@ -37,6 +37,10 @@ export default {
         .center-router {
             width: 53%;
         }
+        .test{
+             min-height: 100px;
+                width: 22%;
+        }
     }
 }
 </style>
@@ -57,4 +61,6 @@ export default {
 .translate-leave {
     transform: translateY(-250px);
 }
+
+
 </style>

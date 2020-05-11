@@ -1,5 +1,5 @@
 <template>
-    <aside class="main-left">
+    <aside class="main-left entry">
         <!-- 介绍 -->
         <div class="main-left-user">
             <div class="main-left-user-background"></div>

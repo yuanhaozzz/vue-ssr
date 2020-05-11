@@ -1,4 +1,10 @@
 import { createApp } from './app';
+import Vue from 'vue';
+import { Button, Table, Icon } from 'view-design';
+import 'view-design/dist/styles/iview.css';
+Vue.component('Button', Button);
+Vue.component('Table', Table);
+Vue.component('Icon', Icon);
 
 const { app, router, store } = createApp();
 if (window.__INITIAL_STATE__) {
@@ -17,7 +23,7 @@ router.onReady(() => {
         // 所以我们对比它们，找出两个匹配列表的差异组件
         let diffed = false;
         const activated = matched.filter((c, i) => {
-            return diffed || (diffed = (prevMatched[i] !== c));
+            return diffed || (diffed = prevMatched[i] !== c);
         });
 
         if (!activated.length) {
@@ -26,16 +32,20 @@ router.onReady(() => {
         console.log('start loading');
         // 这里如果有加载指示器 (loading indicator)，就触发
 
-        Promise.all(activated.map(c => {
-            if (c.asyncData) {
-                return c.asyncData({ store, route: to });
-            }
-        })).then(() => {
-            console.log('end loading');
-            // 停止加载指示器(loading indicator)
+        Promise.all(
+            activated.map(c => {
+                if (c.asyncData) {
+                    return c.asyncData({ store, route: to });
+                }
+            })
+        )
+            .then(() => {
+                console.log('end loading');
+                // 停止加载指示器(loading indicator)
 
-            next();
-        }).catch(next);
+                next();
+            })
+            .catch(next);
     });
 
     app.$mount('#app');

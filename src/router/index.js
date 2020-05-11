@@ -12,11 +12,11 @@ Vue.use(Router);
 export function createRouter() {
     let createRoute = new Router({
         mode: 'history',
-        routes: Routes,
+        routes: Routes
     });
     if (global.Window) {
         NProgress.configure({
-            showSpinner: true,
+            showSpinner: true
         });
         createRoute.beforeEach((to, from, next) => {
             NProgress.start();

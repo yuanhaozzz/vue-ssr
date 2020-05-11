@@ -8,14 +8,14 @@
                 <ul class="flex-start">
                     <router-link to="/">
                         <li class="flex-start">
-                            <img :src="homeImage" alt="" />
-                            首页
+                        <Icon type="ios-home" />
+                            <span>首页</span>
                         </li>
                     </router-link>
                     <router-link to="/blog/content/detail">
                         <li class="flex-start">
-                            <img :src="leaveImage" alt="" />
-                            留言板
+                        <Icon type="ios-paper-outline" />
+                            <span>留言板</span>
                         </li>
                     </router-link>
                 </ul>
@@ -25,13 +25,9 @@
 </template>
 
 <script>
-import HomeImage from '@/assets/images/home.png';
-import LeaveImage from '@/assets/images/leave.png';
 export default {
     data: () => {
         return {
-            homeImage: HomeImage,
-            leaveImage: LeaveImage,
         };
     },
 };
@@ -61,21 +57,10 @@ export default {
                     height: 50px;
                     text-align: center;
                     line-height: 50px;
-                    font-size: 14px;
+                    font-size: 16px;
                     margin-right: 10px;
-                    a {
-                        display: block;
-                        padding: 0 10px;
-                        height: 100%;
-                        cursor: pointer;
-                        color: #464646;
-                        line-height: 50px;
-                        position: relative;
-                    }
-
-                    img {
-                        width: 20px;
-                        margin-right: 5px;
+                    span{
+                        margin-left: 5px;
                     }
                 }
                 li:hover {
