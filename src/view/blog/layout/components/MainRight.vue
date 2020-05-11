@@ -15,17 +15,9 @@
         <div class="main-right-hot">
             <h3>热门文章</h3>
             <ul>
-                <li>
-                    <h4>【GTA5online】100个无能狂怒手办全收集图片位置攻略</h4>
-                    <span>8746次围观</span>
-                </li>
-                <li>
-                    <h4>【GTA5online】100个无能狂怒手办全收集图片位置攻略</h4>
-                    <span>8746次围观</span>
-                </li>
-                <li>
-                    <h4>【GTA5online】100个无能狂怒手办全收集图片位置攻略</h4>
-                    <span>8746次围观</span>
+                <li v-for="item of homeList.hotList">
+                    <h4>{{item.title}}</h4>
+                    <span>{{item.pageViews}}次围观</span>
                 </li>
             </ul>
         </div>
@@ -33,13 +25,24 @@
 </template>
 
 <script>
-export default {};
+import {mapGetters} from 'vuex'
+export default {
+     asyncData({ store, route }) {
+        // 触发 action 后，会返回 Promise
+        return store.dispatch('article/getHomeList');
+    },
+       computed: {
+        ...mapGetters('article', ['homeList']),
+    },
+};
 </script>
 
 <style lang="less" scoped>
 .main-right {
     min-height: 100px;
     width: 22%;
+    position: sticky;
+    top: 0;
     h3 {
         padding-left: 25px;
         background-size: 18px;

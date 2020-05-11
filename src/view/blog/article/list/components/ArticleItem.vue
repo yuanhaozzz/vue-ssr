@@ -4,15 +4,15 @@
             <img src="https://www.wnooo.cn/content/uploadfile/201905/thum52-37521557483025.jpg" />
             <div class="article-item-info-box">
                 <h4>浩哥</h4>
-                <span>9天前</span>
+                <span>{{ article.releaseTime | formatDate}}天前</span>
             </div>
         </div>
         <div class="article-item-article flex-start">
-            <img class="article-cover" src="https://cdn.jsdelivr.net/gh/XSJYA/TU/img/ce8f43c73f1604ceb686a9ad5f79c52989773130.png?m=170x120" />
+            <img class="article-cover" :src="article.imageUrl" />
             <div class="article-box">
-                <h4>育碧喜加三 ！！！</h4>
+                <h4>{{article.title}}</h4>
                 <p>
-                    之前的免费游戏没有领到？“下次一定”来了！即日起至5月5日，《刺客信条2》《光之子》《雷曼：传奇》 三连送！刺客信条2：https://register.ubisoft.com/assassins-creed-2/zh-CN光之子：https://register.ubisoft.com/child-of-light/zh-CN雷曼：传奇：https://register....						
+                   {{article.description}}						
                 </p>
             </div>
         </div>
@@ -28,7 +28,7 @@
                 </li>
                 <li>
                     <Icon type="ios-eye-outline" />
-                    <span>11</span>
+                    <span>{{article.pageViews}}</span>
                 </li>
             </ul>
         </div>
@@ -37,7 +37,12 @@
 
 <script>
     export default {
-        
+        props: {
+            article: {
+                type: Object,
+                default: () => {}
+            }
+        }
     }
 </script>
 

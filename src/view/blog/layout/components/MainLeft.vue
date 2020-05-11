@@ -83,6 +83,8 @@ export default {
 .main-left {
     min-height: 100px;
     width: 22%;
+    position: sticky;
+    top: 0;
     .main-left-user,
     .main-left-about {
         margin-bottom: 20px;

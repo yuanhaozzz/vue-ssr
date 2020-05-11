@@ -1,5 +1,5 @@
 import http from '@/api';
-
+import { filterField } from '@/utils/common';
 export default {
     namespaced: true,
     state: {
@@ -30,9 +30,9 @@ export default {
         /**
          * 获取首页列表
          */
-        getHomeList({ commit }) {
+        getHomeList({ commit }, options) {
             return http
-                .post('/blog/client/home/list')
+                .post('/blog/client/home/list', filterField(options))
                 .then(res => {
                     commit('setHomeList', { homeList: res });
                 })

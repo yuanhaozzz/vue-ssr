@@ -8,13 +8,11 @@
                 <ul class="flex-start">
                     <router-link to="/">
                         <li class="flex-start">
-                        <Icon type="ios-home" />
                             <span>首页</span>
                         </li>
                     </router-link>
                     <router-link to="/blog/content/detail">
                         <li class="flex-start">
-                        <Icon type="ios-paper-outline" />
                             <span>留言板</span>
                         </li>
                     </router-link>

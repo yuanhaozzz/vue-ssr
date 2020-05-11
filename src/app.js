@@ -5,7 +5,7 @@ import { createRouter } from './router';
 import { createStore } from './store';
 import http from '@/api';
 import { sync } from 'vuex-router-sync';
-import { format } from '@/utils/filter';
+import { format, formatDate } from '@/utils/filter';
 
 export function createApp() {
     // 创建 router 和 store 实例
@@ -19,6 +19,7 @@ export function createApp() {
 
     // 过滤器
     Vue.filter('format', format);
+    Vue.filter('formatDate', formatDate);
 
     // 创建应用程序实例，将 router 和 store 注入
     const app = new Vue({

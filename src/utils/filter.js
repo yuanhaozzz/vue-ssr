@@ -19,7 +19,7 @@ export const format = (time, fmt) => {
         'd+': date.getDate(),
         'h+': date.getHours(),
         'm+': date.getMinutes(),
-        's+': date.getSeconds(),
+        's+': date.getSeconds()
     };
 
     for (let key in dt) {
@@ -32,4 +32,12 @@ export const format = (time, fmt) => {
         }
     }
     return fmt;
+};
+
+export const formatDate = date => {
+    let nowDate = new Date();
+    let oldTimestamp = +new Date(date);
+    let nowTimestamp = nowDate.getTime();
+
+    return Math.floor((nowTimestamp - oldTimestamp) / 1000 / 60 / 60 / 24);
 };
