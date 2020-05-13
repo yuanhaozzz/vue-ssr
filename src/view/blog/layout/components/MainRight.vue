@@ -2,7 +2,7 @@
     <aside class="main-right entry">
         <!-- 搜索 -->
         <div class="main-right-input">
-            <input type="text" placeholder="时间真是个坏蛋" />
+            <input type="text" placeholder="月亮不睡你不睡" />
         </div>
         <!-- 公告 -->
         <div class="main-right-message">
@@ -15,7 +15,7 @@
         <div class="main-right-hot">
             <h3>热门文章</h3>
             <ul>
-                <li v-for="item of homeList.hotList">
+                <li v-for="item of homeList.hotList" :key="item.id">
                     <h4>{{item.title}}</h4>
                     <span>{{item.pageViews}}次围观</span>
                 </li>

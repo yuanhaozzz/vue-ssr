@@ -19,11 +19,8 @@
                     <h3>访问量</h3>
                 </li>
             </ul>
-            <img
-                class="main-left-user-avatar"
-                src="https://www.wnooo.cn/content/uploadfile/201905/thum-37521557483025.jpg"
-                alt=""
-            />
+            <div class="main-left-user-avatar"></div>
+                
         </div>
         <!-- 个人档 -->
         <div class="main-left-about">
@@ -96,9 +93,11 @@ export default {
         .main-left-user-background {
             background-color: gainsboro;
             height: 120px;
-            background: url(https://isorepublic.com/wp-content/uploads/2020/03/iso-republic-clouds-in-a-pink-sky-over-wave-soaked-beach-450x300.jpg)
+            background: url(https://images.pexels.com/photos/572056/pexels-photo-572056.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=700&h=300)
                 no-repeat center;
+                background-size: 100%;
         }
+        
         h2 {
             padding-top: 5px;
             letter-spacing: 0;
@@ -138,7 +137,10 @@ export default {
             height: 64px;
             border: 3px solid #fff;
             border-radius: 100%;
-            background: #fff;
+            background: url(https://images.pexels.com/photos/2733657/pexels-photo-2733657.jpeg?auto=compress&cs=tinysrgb&dpr=3&w=2000) no-repeat center;
+            background-size: cover;
+            background-color: #fff;
+
         }
     }
     .main-left-about {

@@ -4,7 +4,7 @@
             <img src="https://www.wnooo.cn/content/uploadfile/201905/thum52-37521557483025.jpg" />
             <div class="article-item-info-box">
                 <h4>浩哥</h4>
-                <span>{{ article.releaseTime | formatDate}}天前</span>
+                <span>{{ article.releaseTime | formatDate}}</span>
             </div>
         </div>
         <div class="article-item-article flex-start">
@@ -19,15 +19,12 @@
         <div class="article-item-bottom">
             <ul class="flex-space-around">
                 <li>
-                    <Icon type="md-heart-outline" />
                     <span>11</span>
                 </li>
                 <li>
-                        <Icon type="ios-text-outline" />
                     <span>11</span>
                 </li>
                 <li>
-                    <Icon type="ios-eye-outline" />
                     <span>{{article.pageViews}}</span>
                 </li>
             </ul>
