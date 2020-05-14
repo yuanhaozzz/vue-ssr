@@ -14,20 +14,21 @@
                 </div>
             </template>
             <template v-else>
-                <p class="article-list-content-empty">敬请期待</p>
+                <p class="article-list-content-empty">正在加急创作中！！</p>
             </template>
         </section>
         <!-- 加载组件 -->
         <loading  v-show="isLoad"/>
         <!-- 弹窗详情 -->
-        <LayerDetail ref="detail"/>
+        <layer ref="layerDetail"> </layer>
+        
     </div>
 </template>
 
 <script>
 import ArticleItme from './components/ArticleItem'
 import Loading from '@/components/loading/Loading'
-import LayerDetail from '../detail/components/detail'
+import Layer from '../detail/components/Layer'
 import {mapGetters} from 'vuex'
 export default {
     asyncData({ store, route }) {
@@ -69,7 +70,7 @@ export default {
           * 跳转详情
           */
           jumpToDetail(item) {
-              this.$refs.detail.openLayer(item)
+              this.$refs.layerDetail.openLayer(item)
           }
     },
      computed: {
@@ -81,7 +82,7 @@ export default {
     components: {
         ArticleItme,
         Loading,
-        LayerDetail
+        Layer
     },
 };
 </script>

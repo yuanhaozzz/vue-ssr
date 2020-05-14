@@ -3,7 +3,6 @@ let Home = () => import('@/view/home');
 let Article = () => import('@/view/article');
 let Mood = () => import('@/view/mood');
 let Self = () => import('@/view/self');
-let Message = () => import('@/view/message');
 // // 文章详情
 // let ArticleDetail = () => import('@/view/home/page/ArticleDetail');
 // 分享
@@ -15,6 +14,8 @@ let contentLayout = () => import('@/view/blog/layout');
 let ArticleList = () => import('@/view/blog/article/list');
 // 文章详情
 let ArticleDetail = () => import('@/view/blog/article/detail');
+// 留言板
+let Message = () => import('@/view/blog/message');
 
 export default [
     {
@@ -70,6 +71,10 @@ export default [
             {
                 path: 'detail',
                 component: ArticleDetail,
+            },
+            {
+                path: 'message',
+                component: Message,
             },
         ],
     },

@@ -1,27 +1,24 @@
 <template>
     <div class="article-detail-container">
-        detail
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+        <detail ref="detail" :isLayer="false"/>
     </div>
 </template>
 
 <script>
-export default {};
+import Detail from './components/Detail'
+export default {
+    mounted() {
+
+        this.$refs.detail.openLayer({id:this.$route.query.id})
+    },
+    components: {
+        Detail
+    }
+};
 </script>
 
 <style lang="less" scoped>
 .article-detail-container {
-    background: #fff;
+    padding-bottom: 40px;
 }
 </style>

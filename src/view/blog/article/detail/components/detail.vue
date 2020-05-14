@@ -1,14 +1,8 @@
 <template>
-    <div class="article-detail-container" ref="detail" v-if="isShow">
-        <div class="article-detail-box">
-            <!-- 操作 -->
-            <div class="article-detail-header flex-start">
-                <ul class="flex-start">
-                    <li @click="closeLayer"></li>
-                    <li @click="closeLayer"></li>
-                    <li @click="closeLayer"></li>
-                </ul>
-            </div>
+    <div class="article-detail-container" v-if="isShow">
+        
+        <div class="article-detail-box" :style="isLayer? 'box-shadow: 0 10px 60px rgba(0,0,0,.4);': ''">
+           
             <!-- 标题 -->
             <div class="article-detail-title">
                 <h3 >{{detail.title}}</h3>
@@ -16,7 +10,7 @@
             </div>
             <!-- 内容 -->
             <div class="article-detail-content">
-                  <div class="article-detail-content-el" v-html="compiledMarkdownValue"></div>
+                  <div class="article-detail-content-el" :style="isLayer ? style : ''" v-html="compiledMarkdownValue"></div>
             </div>
             <!-- 点赞 打赏 -->
             <div class="article-detail-bottom">
@@ -36,8 +30,7 @@
                     </li>
                 </ul>
             </div>
-            <!-- 完成内容 -->
-            <p class="article-detail-footer" @click="jumpToDetail">查看完整内容</p>
+            
             <!-- 加载 -->
             <!-- <loading /> -->
         </div>
@@ -60,10 +53,12 @@ import javascript from 'highlight.js/lib/languages/javascript';
 hljs.registerLanguage('javascript', javascript);
 
 export default {
-    // asyncData({ store, route, query }) {
-    //     // 触发 action 后，会返回 Promise
-    //     return store.dispatch('article/getDetail', query);
-    // },
+    props: {
+        isLayer: {
+            type: Boolean,
+            default: true
+        }
+    },
     data: () => {
         return {
             gift: Gift,
@@ -72,7 +67,11 @@ export default {
             share: Share,
             item: {},
             html: '<p>测试</p>',
-            isShow:false
+            isShow: false,
+            style: {
+                height: '600px',
+                overflow: 'hidden'
+            }
         }
         
     },
@@ -81,13 +80,6 @@ export default {
     },
     methods: {
         /**
-         * 关闭弹窗
-         */
-        closeLayer() {
-            this.isShow = false
-        },
-        
-        /**
          * 打开弹窗
          */
         openLayer(item) {
@@ -95,26 +87,15 @@ export default {
             let that = this
             this.$store.dispatch('article/getDetail', {id:this.item.id}).then(() => {
                 that.isShow = true
-                // let { id, pageViews } = this.detail;
-                // let params = {
-                //     id,
-                //     pageViews: +pageViews + 1
-                // };
-                // this.$http.post('/blog/client/update/data', params);
+                let { id, pageViews } = this.detail;
+                let params = {
+                    id,
+                    pageViews: +pageViews + 1
+                };
+                this.$http.post('/blog/client/update/data', params);
             })
         },
 
-        /**
-         * 跳转详情
-         */
-        jumpToDetail() {
-            this.$router.push({
-                  path: '/blog/content/detail',
-                  query: {
-                      id: this.item.id
-                  }
-              })
-        }
     },
     computed: {
         ...mapGetters('article', ['detail']),
@@ -135,45 +116,11 @@ export default {
 
 <style lang="less" scoped>
 .article-detail-container {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    overflow-y: scroll;
-    z-index: 99;
     .article-detail-box{
-        margin: 40px auto 0;
         max-width: 800px;
         min-height: 150px;
-        border-radius: 5px;
+        border-radius: 5px 5px 0 0px;
         background-color: #FFF;
-        box-shadow: 0 10px 60px rgba(0,0,0,.4);
-    }
-    .article-detail-header{
-        position: relative;
-        background: #f3f3f3;
-        border-radius: 5px;
-        font-size: 10px;
-        height: 24px;
-        padding-left: 10px;
-        ul{
-            li{
-                width: 9px;
-                height: 9px;
-                border-radius: 10px;
-                margin-right: 5px;
-            }
-            li:nth-of-type(1){
-                background-color: #f46965;
-            }
-            li:nth-of-type(2){
-                background-color: #e9cd06;
-            }
-            li:nth-of-type(3){
-                background-color: #81d95e;
-            }
-        }
     }
     .article-detail-title{
         padding: 20px 25px 10px;
@@ -191,10 +138,14 @@ export default {
         position: relative;
         padding: 15px 25px;
         font-size: 15px;
-        height: 560px;
+        // height: 560px;
+         img{
+                width: 100%;
+            }
         .article-detail-content-el{
             height: 100%;
-            overflow-y: scroll;
+           
+            // overflow-y: scroll;
         }
     }
     .article-detail-bottom{
@@ -219,54 +170,81 @@ export default {
             }
         }
     }
-    .article-detail-footer{
-        text-align: center;
-        border-top: 1px solid #eee;
-        padding: 15px 2px;
-        color: #666;
-        font-size: 16px;
-        cursor: pointer;
-    }
-    .article-detail-footer:hover{
-        background-color: #f5f8fa;;
-    }
 }
 </style>
 <style lang="less">
-pre {
-    padding: 16px;
-    overflow: auto;
-    font-size: 18px;
-    line-height: 1.45;
-    border-radius: 3px;
-    background: #fdf6e3;
-    font-family: Menlo, "Ubuntu Mono", Consolas, "Courier New",
-        "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
-    margin: 10px 0;
+.article-detail-container{
+    pre {
+        position: relative;
+        line-height: 1.5;
+        font-family: Menlo,Monaco,Consolas,Courier New,monospace;
+        overflow: auto;
+    font-size: 14px;
+    code{
+        padding: 18px 15px 12px;
+        overflow-x: auto;
+            color: #333;
+            background: #f8f8f8;
+            display: block;
+            word-break: normal;
+    }
+    }
+    .hljs-keyword {
+        color: #dc322f !important;
+    }
+    .hljs-string {
+        color: #d14 !important;
+    }
+    .hljs-params {
+        color: #657b83 !important;
+    }
+    .hljs-subst {
+        color: #859900 !important;
+    }
+    .hljs-title {
+        color: #900 !important;
+    }
+    .hljs-built_in {
+        color: #0086b3 !important;
+    }
+    blockquote {
+        padding: 0 1em;
+        color: #6a737d;
+        border-left: 0.25em solid #dfe2e5;
+    }
+    .hljs-literal{
+        color: teal !important;
+    }
+    .hljs-comment {
+        color: #998 !important;
+    }
+    .article-detail-content-el img{
+        max-width: 100%;
+    }
+    .article-detail-content-el{
+         h1, h2, h3{
+                padding: 10px 0;
+                font-weight: bold;
+         }
+         h1{
+             font-size: 22px;
+         }
+         h2{
+             font-size: 20px;
+         }
+         h3{
+             font-size: 18px;
+         }
+         h4{
+             font-size: 16px;
+         }
+       a{
+               color: #0269c8 !important;
+       }
+       p{
+           margin: 5px 0;
+       }
+    }
 }
-.hljs-keyword {
-    color: #dc322f !important;
-}
-.hljs-string {
-    color: #2aa198 !important;
-}
-.hljs-params {
-    color: #657b83 !important;
-}
-.hljs-subst {
-    color: #859900 !important;
-}
-.hljs-title {
-    color: #268bd2 !important;
-}
-.hljs-built_in {
-    color: #dc322f !important;
-}
-blockquote {
-    padding: 0 1em;
-    color: #6a737d;
-    border-left: 0.25em solid #dfe2e5;
-}
-.hljs-comment {
-}
+
 </style>

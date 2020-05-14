@@ -59,7 +59,7 @@ export default {
 
 .translate-enter-to,
 .translate-leave {
-    transform: translateY(-250px);
+    transform: translateY(0px);
 }
 
 
