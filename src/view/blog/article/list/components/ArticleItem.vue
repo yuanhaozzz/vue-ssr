@@ -4,41 +4,107 @@
             <img src="https://www.wnooo.cn/content/uploadfile/201905/thum52-37521557483025.jpg" />
             <div class="article-item-info-box">
                 <h4>浩哥</h4>
-                <span>{{ article.releaseTime | formatDate}}</span>
+                <span>{{ articleItem.releaseTime | formatDate}}</span>
             </div>
         </div>
+        
         <div class="article-item-article flex-start">
-            <img class="article-cover" :src="article.imageUrl" />
+            <img class="article-cover" :src="articleItem.imageUrl" />
             <div class="article-box">
-                <h4>{{article.title}}</h4>
+                <h4>{{articleItem.title}}</h4>
                 <p>
-                   {{article.description}}						
+                   {{articleItem.description}}						
                 </p>
             </div>
         </div>
-        <div class="article-item-bottom">
+        <!-- 操作栏 -->
+        <div class="article-item-bottom" @click.stop="">
             <ul class="flex-space-around">
-                <li>
-                    <span>11</span>
+                <li class="flex-center">
+                    <template  v-if="!articleItem.isLike">
+                        <img :src="like" alt="" @click="handleLike">
+                        <span @click="handleLike" :class="{'active': articleItem.isLike}">{{articleItem.likes}}</span>
+                    </template>
+                    <template v-else>
+                        <img :src="selectLike" alt="" @click="handleLiked">
+                        <span @click="handleLiked" :class="{'active': articleItem.isLike}">{{articleItem.likes}}</span>
+                    </template>
+                  
                 </li>
-                <li>
-                    <span>11</span>
+                <li class="flex-center">
+
+                    <img :src="leave" alt="">
+                    <span>{{articleItem.comment}}</span>
                 </li>
-                <li>
-                    <span>{{article.pageViews}}</span>
+                <li class="flex-center">
+                    <img :src="eye" alt="">
+                    <span>{{articleItem.pageViews}}</span>
                 </li>
             </ul>
         </div>
+        <notification ref="notification"/>
     </div>
 </template>
 
 <script>
+import Like from '@/assets/images/like.png'
+import SelectLike from '@/assets/images/select-like.png'
+import Leave from '@/assets/images/leave.png'
+import Eye from '@/assets/images/eye.png'
+import {setLocalStorage, getLocalStorage} from '@/utils/common'
+import Notification from '@/components/notification'
     export default {
         props: {
             article: {
                 type: Object,
                 default: () => {}
             }
+        },
+        data: () => {
+            return {
+                like: Like,
+                selectLike:SelectLike,
+                leave:Leave,
+                eye:Eye,
+                articleItem: {}
+            }
+        },
+        mounted() {
+            this.init()
+        },
+        methods: {
+            /**
+             * 初始化详情
+             */
+            init() {
+                this.articleItem = this.article
+                this.$set(this.articleItem, 'isLike', getLocalStorage('articleItem' + this.articleItem.id))
+            },  
+
+            /**
+            *   点赞
+             */
+             handleLike() {
+                 this.articleItem.isLike = true
+                 ++this.articleItem.likes
+                 setLocalStorage('articleItem' + this.articleItem.id, '1')
+                  let { likes, id } = this.articleItem;
+                    let params = {
+                        id,
+                        likes
+                    };
+                    this.$http.post('/blog/client/update/data', params);
+             },
+             
+             /**
+              * 已点赞
+              */
+             handleLiked() {
+                 this.$refs.notification.open()
+             }
+        },
+        components: {
+            Notification
         }
     }
 </script>
@@ -46,7 +112,7 @@
 <style lang="less" scoped>
 .article-item-container{
     background: #fff;
-    padding: 20px;
+    padding: 20px 20px 0;
     cursor: pointer;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -109,7 +175,16 @@
             text-align:center;
              border-right: 1px solid #f4f4f4;
             font-size: 16px;
-               color: #999;
+            color: #999;
+            min-height: 35px;
+            user-select: none;
+            img{
+                width: 18px;
+                margin-right: 5px;
+            }
+            .active{
+                color: #f8c7d3;
+            }
 
         }
         li:last-child{

@@ -6,7 +6,7 @@
             <!-- 路由 -->
             <section class="center-router entry-center">
                 <transition name="translate">
-                    <router-view></router-view>
+                    <router-view  :key="key"></router-view>
                 </transition>
             </section>
             <!-- 右侧栏 -->
@@ -19,6 +19,11 @@
 import MainLeft from './MainLeft';
 import MainRight from './MainRight';
 export default {
+    computed:{
+	    key(){
+	        return this.$route.path + Math.random();
+	    }
+	},
     components: {
         MainLeft,
         MainRight,

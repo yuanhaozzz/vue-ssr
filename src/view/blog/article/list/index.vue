@@ -9,7 +9,7 @@
         <!-- 文章列表 -->
         <section class="article-list-content">
             <template v-if="homeList.list.length > 0">
-                <div v-for="(item, index) of homeList.list"  :key="index" @click="jumpToDetail(item)">
+                <div v-for="item of homeList.list"  :key="item.id" @click="jumpToDetail(item)">
                     <article-itme :article="item"></article-itme>
                 </div>
             </template>
@@ -31,9 +31,9 @@ import Loading from '@/components/loading/Loading'
 import Layer from '../detail/components/Layer'
 import {mapGetters} from 'vuex'
 export default {
-    asyncData({ store, route }) {
+      asyncData({ store, route }) {
         // 触发 action 后，会返回 Promise
-        return store.dispatch('article/getHomeList', {type:0});
+        return store.dispatch('article/getHomeList', {type:0}).then(() => store.dispatch('article/getStatisticst')) 
     },
     data: () => {
         return {
@@ -77,7 +77,6 @@ export default {
         ...mapGetters('article', ['homeList']),
     },
     mounted() {
-        console.log(this.homeList.list, '---------');
     },
     components: {
         ArticleItme,
@@ -106,6 +105,8 @@ export default {
                 font-size: 14px;
                 line-height: 35px;
                 position:relative;
+                cursor: pointer;
+                user-select: none;
             }
             .action{
                 border-bottom: 2px solid #a1a1a1;

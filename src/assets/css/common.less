@@ -42,8 +42,7 @@ body {
 img {
     display: block;
 }
-button,
-li {
+button{
     cursor: pointer;
 }
 
@@ -72,6 +71,15 @@ li {
         transform: translateY(0px);
         opacity: 1;
     }
+}
+
+
+.before::before{
+    content: attr(placeholder);
+    position: absolute;
+    opacity: .4;
+    pointer-events: none;
+    user-select: none;
 }
 
 html,

@@ -10,7 +10,7 @@
                     </ul>
                 </div>
             <!-- 详情 -->
-            <layer-detail ref="layerDetail"></layer-detail>
+            <layer-detail ref="layerDetail" :detail="detail"></layer-detail>
             <!-- 完成内容 -->
             <p class="article-detail-footer" @click="jumpToDetail">查看完整内容</p>
          </div>
@@ -19,6 +19,8 @@
 
 <script>
 import LayerDetail from './Detail'
+import { mapGetters } from 'vuex';
+
 export default {
     data: () => {
         return {
@@ -27,6 +29,24 @@ export default {
         }
     },
     methods: {
+        /**
+         * 获取详情
+         */
+        getDetail() {
+            this.$store.dispatch('article/getDetail', {id:this.item.id}).then(() => {
+                this.isShow = true
+                // if (!this.isLayer) {
+                //      let { id, pageViews } = this.detail;
+                //     let params = {
+                //         id,
+                //         pageViews: +pageViews + 1
+                //     };
+                //     this.$http.post('/blog/client/update/data', params);
+                // }
+               
+            })
+        },
+
         /**
          * 关闭弹窗
          */
@@ -38,11 +58,8 @@ export default {
          * 打开弹窗
          */
         openLayer(item) {
-            this.isShow = true
             this.item = item
-            this.$nextTick(() => {
-                this.$refs.layerDetail.openLayer(item)
-            })
+            this.getDetail()
             
         },
         
@@ -50,6 +67,7 @@ export default {
          * 跳转详情
          */
         jumpToDetail() {
+            console.log(this.item.id)
             this.$router.push({
                   path: '/blog/content/detail',
                   query: {
@@ -58,6 +76,10 @@ export default {
               })
         }
         
+    },
+    computed: {
+        ...mapGetters('article', ['detail']),
+
     },
     components: {
         LayerDetail

@@ -4,7 +4,8 @@ export default {
     namespaced: true,
     state: {
         homeList: {},
-        detail: {}
+        detail: {},
+        statisticst: {}
     },
     getters: {
         homeList: state => {
@@ -13,7 +14,11 @@ export default {
 
         detail: state => {
             return state.detail;
-        }
+        },
+
+        statisticst: state => {
+            return state.statisticst;
+        },
     },
     mutations: {
         setHomeList(state, payload) {
@@ -24,7 +29,12 @@ export default {
         setDetail(state, payload) {
             let { detail } = payload;
             state.detail = detail;
-        }
+        },
+
+        setStatisticst(state, payload) {
+            let { statisticst } = payload;
+            state.statisticst = statisticst;
+        },
     },
     actions: {
         /**
@@ -55,6 +65,20 @@ export default {
                 })
                 .catch(err => {
                     console.log(err);
+                });
+        },
+
+        /**
+         * 获取统计
+         */
+        getStatisticst({ commit }) {
+            return http
+                .post('/blog/client/statisticst', {})
+                .then(res => {
+                    commit('setStatisticst', { statisticst: res.statisticst });
+                })
+                .catch(err => {
+                    console.log(err, '-------------------------');
                 });
         }
     }

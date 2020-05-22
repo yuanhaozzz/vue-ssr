@@ -39,13 +39,21 @@ export const formatDate = date => {
     let oldTimestamp = +new Date(date);
     let nowTimestamp = nowDate.getTime();
     let sum = nowTimestamp - oldTimestamp;
+
+    let minute = sum / 1000 / 60;
     let hour = sum / 1000 / 60 / 60;
     let day = hour / 24;
     let month = day / 30;
-    if (hour < 24) {
+    if (minute < 1) {
+        return  '刚刚';
+    } else if (minute < 60) {
+        return Math.floor(minute) + '分钟前';
+    } else if (hour < 24) {
         return Math.floor(hour) + '小时前';
     } else if (day < 30) {
         return Math.floor(day) + '天前';
     } 
+    
+    
     return Math.floor(month) + '月前';
 };

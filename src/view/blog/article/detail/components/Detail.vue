@@ -1,5 +1,5 @@
 <template>
-    <div class="article-detail-container" v-if="isShow">
+    <div class="article-detail-container">
         
         <div class="article-detail-box" :style="isLayer? 'box-shadow: 0 10px 60px rgba(0,0,0,.4);': ''">
            
@@ -46,7 +46,6 @@ import SelectLike from '@/assets/images/select-like.png'
 import Like from '@/assets/images/like.png'
 import Share from '@/assets/images/share.png'
 
-import { mapGetters } from 'vuex';
 import marked from 'marked';
 import hljs from 'highlight.js/lib/highlight';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -57,6 +56,10 @@ export default {
         isLayer: {
             type: Boolean,
             default: true
+        },
+        detail: {
+            type: Object,
+            default: () => {}
         }
     },
     data: () => {
@@ -78,27 +81,7 @@ export default {
     mounted() {
         
     },
-    methods: {
-        /**
-         * 打开弹窗
-         */
-        openLayer(item) {
-            this.item = item
-            let that = this
-            this.$store.dispatch('article/getDetail', {id:this.item.id}).then(() => {
-                that.isShow = true
-                let { id, pageViews } = this.detail;
-                let params = {
-                    id,
-                    pageViews: +pageViews + 1
-                };
-                this.$http.post('/blog/client/update/data', params);
-            })
-        },
-
-    },
     computed: {
-        ...mapGetters('article', ['detail']),
         compiledMarkdownValue: function () {
             return marked(this.detail.article, {
                 highlight: function (code) {

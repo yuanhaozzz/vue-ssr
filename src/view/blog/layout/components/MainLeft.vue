@@ -7,15 +7,15 @@
             <p>对未来有梦想，但不奢求，享受每一时刻即可，想太多毫无意义</p>
             <ul class="main-left-user-blog flex-space-between">
                 <li>
-                    <span>11</span>
+                    <span>{{statisticst.article}}</span>
                     <h3>文章</h3>
                 </li>
                 <li>
-                    <span>11</span>
+                    <span>{{statisticst.comment}}</span>
                     <h3>评论</h3>
                 </li>
                 <li>
-                    <span>11</span>
+                    <span>{{statisticst.views}}</span>
                     <h3>访问量</h3>
                 </li>
             </ul>
@@ -34,7 +34,7 @@
                 </li>
                 <li class="flex-start">
                     <img :src="wechatImage" alt="" />
-                    <p>526100629</p>
+                    <p>yh526100629</p>
                 </li>
                 <li class="flex-start">
                     <img :src="houseImage" alt="" />
@@ -49,11 +49,13 @@
         <!-- 点赞 -->
         <div class="main-left-good flex-center">
             <h3>Do you like me?</h3>
-            <div class="flex-center main-left-good-box">
+            <div class="flex-center main-left-good-box" @click="handleFavorite">
                 <img :src="heartImage" alt="" />
-                <span>323</span>
+                <span>{{statisticst.favorite}}</span>
             </div>
         </div>
+        <!-- 通知弹窗 -->
+        <notification ref="notification"/>
     </aside>
 </template>
 
@@ -63,6 +65,9 @@ import WechatImage from '@/assets/images/wechat.png';
 import HouseImage from '@/assets/images/house.png';
 import EmailImage from '@/assets/images/email.png';
 import HeartImage from '@/assets/images/heart.png';
+
+import Notification from '@/components/notification'
+import {mapGetters, mapMutations} from 'vuex'
 export default {
     data: () => {
         return {
@@ -73,6 +78,31 @@ export default {
             heartImage: HeartImage,
         };
     },
+    methods: {
+        /**
+         * 首页点赞
+         */
+        handleFavorite() {
+            let favorite = localStorage.getItem('home-favorite')
+            if (favorite) {
+                this.$refs.notification.open()
+            } else {
+                this.$http.post('/blog/client/update/statisticst', {favorite:1}).then(res => {
+                    ++this.statisticst.favorite
+                    this.setStatisticst({statisticst: this.statisticst})
+                    localStorage.setItem('home-favorite', 1)
+                })
+            }
+          
+        },
+        ...mapMutations('article', ['setStatisticst'])
+    },
+    computed: {
+         ...mapGetters('article', ['statisticst']),
+    },
+    components: {
+        Notification
+    }
 };
 </script>
 

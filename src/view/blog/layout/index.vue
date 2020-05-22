@@ -11,8 +11,12 @@
 import BlogHeader from './components/Header';
 import BlogMain from './components/BlogMain';
 import Rocket from '@/assets/images/rocket.svg'
-
+import {mapActions} from 'vuex'
 export default {
+      asyncData({ store, route }) {
+        // 触发 action 后，会返回 Promise
+        return store.dispatch('article/getHomeList', {type:0}).then(() => store.dispatch('article/getStatisticst')) 
+    },
      data: () => {
         return{
             rocket: Rocket,
@@ -30,7 +34,6 @@ export default {
             let that = this
             document.addEventListener('scroll', e => {
                 let scrollTop = document.scrollTop || document.documentElement.scrollTop
-                console.log(scrollTop)
                 if (scrollTop > 400) {
                     that.rocketShow = true
                 } else {
@@ -48,10 +51,11 @@ export default {
                 document.body.scrollTop = document.documentElement.scrollTop = scrollTop - 30
                 setTimeout(() => {
                     this.backToTop()
-                }, 1000 / 60);
+                }, 10);
             }
             
-        }
+        },
+        ...mapActions('article', ['getHomeList'])
     },
     components: {
         BlogHeader,

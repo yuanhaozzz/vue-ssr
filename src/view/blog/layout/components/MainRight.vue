@@ -2,7 +2,7 @@
     <aside class="main-right entry">
         <!-- 搜索 -->
         <div class="main-right-input">
-            <input type="text" placeholder="月亮不睡你不睡" />
+            <input type="text" v-model.trim="keyword" placeholder="月亮不睡你不睡" @keydown.13="searchKeyWord"/>
         </div>
         <!-- 公告 -->
         <div class="main-right-message">
@@ -15,7 +15,7 @@
         <div class="main-right-hot">
             <h3>热门文章</h3>
             <ul>
-                <li v-for="item of homeList.hotList" :key="item.id">
+                <li v-for="item of homeList.hotList" :key="item.id" @click="jumpToDetail(item)">
                     <h4>{{item.title}}</h4>
                     <span>{{item.pageViews}}次围观</span>
                 </li>
@@ -25,11 +25,40 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 export default {
      asyncData({ store, route }) {
         // 触发 action 后，会返回 Promise
         return store.dispatch('article/getHomeList');
+    },
+    data: () => {
+        return {
+            keyword: ''
+        }
+    },
+    methods: {
+        /**
+         * 搜索
+         */
+        searchKeyWord() {
+            let params = {
+                type: 5,
+                keyword: this.keyword
+            }
+            this.getHomeList(params)
+        },
+        /**
+         * 跳转详情
+         */
+        jumpToDetail(item) {
+            this.$router.push({
+                  path: '/blog/content/detail',
+                  query: {
+                      id: item.id
+                  }
+              })
+        },
+        ...mapActions('article', ['getHomeList'])
     },
        computed: {
         ...mapGetters('article', ['homeList']),
@@ -86,6 +115,7 @@ export default {
                     text-overflow: ellipsis;
                     white-space: nowrap;
                     transition: all 0.4s;
+                    cursor: pointer;
                 }
                 h4:hover {
                     padding-left: 7px;
