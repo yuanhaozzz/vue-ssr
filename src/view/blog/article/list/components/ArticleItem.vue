@@ -7,42 +7,54 @@
                 <span>{{ articleItem.releaseTime | formatDate}}</span>
             </div>
         </div>
-        
+
         <div class="article-item-article flex-start">
-            <img class="article-cover" :src="articleItem.imageUrl" />
+            <img class="article-cover"
+                 :src="articleItem.imageUrl" />
             <div class="article-box">
                 <h4>{{articleItem.title}}</h4>
                 <p>
-                   {{articleItem.description}}						
+                    {{articleItem.description}}
                 </p>
             </div>
         </div>
         <!-- 操作栏 -->
-        <div class="article-item-bottom" @click.stop="">
+        <div class="article-item-bottom"
+             @click.stop="">
             <ul class="flex-space-around">
-                <li class="flex-center">
-                    <template  v-if="!articleItem.isLike">
-                        <img :src="like" alt="" @click="handleLike">
-                        <span @click="handleLike" :class="{'active': articleItem.isLike}">{{articleItem.likes}}</span>
+                <li class="flex-center"
+                    title="点亮你的小心心">
+                    <template v-if="!articleItem.isLike">
+                        <img :src="like"
+                             alt=""
+                             @click="handleLike">
+                        <span @click="handleLike"
+                              :class="{'active': articleItem.isLike}">{{articleItem.likes}}</span>
                     </template>
                     <template v-else>
-                        <img :src="selectLike" alt="" @click="handleLiked">
-                        <span @click="handleLiked" :class="{'active': articleItem.isLike}">{{articleItem.likes}}</span>
+                        <img :src="selectLike"
+                             alt=""
+                             @click="handleLiked">
+                        <span @click="handleLiked"
+                              :class="{'active': articleItem.isLike}">{{articleItem.likes}}</span>
                     </template>
-                  
-                </li>
-                <li class="flex-center">
 
-                    <img :src="leave" alt="">
+                </li>
+                <li class="flex-center"
+                    title="评论数量">
+                    <img :src="leave"
+                         alt="">
                     <span>{{articleItem.comment}}</span>
                 </li>
-                <li class="flex-center">
-                    <img :src="eye" alt="">
+                <li class="flex-center"
+                    title="阅读量">
+                    <img :src="eye"
+                         alt="">
                     <span>{{articleItem.pageViews}}</span>
                 </li>
             </ul>
         </div>
-        <notification ref="notification"/>
+        <notification ref="notification" />
     </div>
 </template>
 
@@ -51,108 +63,109 @@ import Like from '@/assets/images/like.png'
 import SelectLike from '@/assets/images/select-like.png'
 import Leave from '@/assets/images/leave.png'
 import Eye from '@/assets/images/eye.png'
-import {setLocalStorage, getLocalStorage} from '@/utils/common'
+import { setLocalStorage, getLocalStorage } from '@/utils/common'
 import Notification from '@/components/notification'
-    export default {
-        props: {
-            article: {
-                type: Object,
-                default: () => {}
-            }
-        },
-        data: () => {
-            return {
-                like: Like,
-                selectLike:SelectLike,
-                leave:Leave,
-                eye:Eye,
-                articleItem: {}
-            }
-        },
-        mounted() {
-            this.init()
-        },
-        methods: {
-            /**
-             * 初始化详情
-             */
-            init() {
-                this.articleItem = this.article
-                this.$set(this.articleItem, 'isLike', getLocalStorage('articleItem' + this.articleItem.id))
-            },  
-
-            /**
-            *   点赞
-             */
-             handleLike() {
-                 this.articleItem.isLike = true
-                 ++this.articleItem.likes
-                 setLocalStorage('articleItem' + this.articleItem.id, '1')
-                  let { likes, id } = this.articleItem;
-                    let params = {
-                        id,
-                        likes
-                    };
-                    this.$http.post('/blog/client/update/data', params);
-             },
-             
-             /**
-              * 已点赞
-              */
-             handleLiked() {
-                 this.$refs.notification.open()
-             }
-        },
-        components: {
-            Notification
+export default {
+    props: {
+        article: {
+            type: Object,
+            default: () => { }
         }
+    },
+    data: () => {
+        return {
+            like: Like,
+            selectLike: SelectLike,
+            leave: Leave,
+            eye: Eye,
+            articleItem: {}
+        }
+    },
+    mounted () {
+        this.init()
+    },
+    methods: {
+        /**
+         * 初始化详情
+         */
+        init () {
+            this.articleItem = this.article
+            this.$set(this.articleItem, 'isLike', getLocalStorage('articleItem' + this.articleItem.id))
+        },
+
+        /**
+        *   点赞
+         */
+        handleLike () {
+            this.articleItem.isLike = true
+            ++this.articleItem.likes
+            setLocalStorage('articleItem' + this.articleItem.id, '1')
+
+            let { likes, id } = this.articleItem;
+            let params = {
+                id,
+                likes
+            };
+            this.$http.post('/blog/client/update/data', params);
+        },
+
+        /**
+         * 已点赞
+         */
+        handleLiked () {
+            this.$refs.notification.open()
+        }
+    },
+    components: {
+        Notification
     }
+}
 </script>
 
 <style lang="less" scoped>
-.article-item-container{
+.article-item-container {
     background: #fff;
     padding: 20px 20px 0;
     cursor: pointer;
     margin-bottom: 10px;
     border-radius: 5px;
-    .article-item-info{
+    .article-item-info {
         margin-bottom: 18px;
-        img{
+        img {
             border-radius: 5px;
             width: 45px;
             height: 45px;
             margin-right: 15px;
         }
-        .article-item-info-box{
+        .article-item-info-box {
             color: #464646;
-            h4{
+            h4 {
                 margin-bottom: 6px;
                 font-size: 17px;
             }
-            span{
+            span {
                 font-size: 14px;
             }
         }
     }
-    .article-item-article{
+    .article-item-article {
         margin: 10px 0;
         border-radius: 5px;
         border: 1px solid #e5e9ef;
-        img{
+        img {
             width: 170px;
             height: 120px;
         }
-        .article-box{
+        .article-box {
             flex: 1;
             padding: 15px;
-            h4{
+            h4 {
                 font-size: 16px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
-            p{
+            p {
                 font-size: 14px;
                 margin-top: 6px;
                 overflow: hidden;
@@ -167,27 +180,26 @@ import Notification from '@/components/notification'
             }
         }
     }
-    .article-item-bottom{
+    .article-item-bottom {
         border-top: 1px solid #f4f4f4;
         margin-top: 15px;
-        li{
+        li {
             width: 33%;
-            text-align:center;
-             border-right: 1px solid #f4f4f4;
+            text-align: center;
+            border-right: 1px solid #f4f4f4;
             font-size: 16px;
             color: #999;
             min-height: 35px;
             user-select: none;
-            img{
+            img {
                 width: 18px;
                 margin-right: 5px;
             }
-            .active{
+            .active {
                 color: #f8c7d3;
             }
-
         }
-        li:last-child{
+        li:last-child {
             border: none;
         }
     }
