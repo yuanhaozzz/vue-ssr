@@ -94,7 +94,9 @@ export default {
     asyncData ({ store, route }) {
         // 触发 action 后，会返回 Promise
         return store
-            .dispatch('article/getHomeList', { type: 0 })
+            .dispatch('article/getHomeList', { type: 0 }).then(() => {
+                return store.dispatch('article/getStatisticst')
+            })
     },
     data: () => {
         return {
