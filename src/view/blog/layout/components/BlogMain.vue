@@ -5,9 +5,9 @@
             <main-left></main-left>
             <!-- 路由 -->
             <section class="center-router">
-                <!-- <transition name="translate"> -->
-                <router-view :key="key"></router-view>
-                <!-- </transition> -->
+                <transition name="translate">
+                    <router-view :key="key"></router-view>
+                </transition>
             </section>
             <!-- 右侧栏 -->
             <main-right></main-right>
