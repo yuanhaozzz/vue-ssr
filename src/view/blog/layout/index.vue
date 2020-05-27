@@ -18,6 +18,13 @@ import Loading from '@/components/loading/Loading';
 import Rocket from '@/assets/images/rocket.svg';
 import { mapActions, mapGetters } from 'vuex';
 export default {
+    asyncData ({ store, route }) {
+        // 触发 action 后，会返回 Promise
+        return store
+            .dispatch('article/getHomeList', { type: 0 }).then(() => {
+                return store.dispatch('article/getStatisticst')
+            })
+    },
     data: () => {
         return {
             rocket: Rocket,
