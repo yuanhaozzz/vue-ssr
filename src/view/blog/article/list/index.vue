@@ -13,63 +13,66 @@
         </section>
         <!-- 文章列表 -->
         <section class="article-list-content">
-            <div v-for="item of homeList.list"
-                 :key="item.id"
-                 @click="jumpToDetail(item)">
-                <!-- 子组件 -->
-                <div class="article-item-container">
-                    <div class="article-item-info flex-start">
-                        <img src="https://www.wnooo.cn/content/uploadfile/201905/thum52-37521557483025.jpg" />
-                        <div class="article-item-info-box">
-                            <h4>浩哥</h4>
-                            <span>{{ item.releaseTime | formatDate }}</span>
+            <template v-if="homeList.list.length > 0">
+                <div v-for="item of homeList.list"
+                     :key="item.id"
+                     @click="jumpToDetail(item)">
+                    <!-- 子组件 -->
+                    <div class="article-item-container">
+                        <div class="article-item-info flex-start">
+                            <img src="https://www.wnooo.cn/content/uploadfile/201905/thum52-37521557483025.jpg" />
+                            <div class="article-item-info-box">
+                                <h4>浩哥</h4>
+                                <span>{{ item.releaseTime | formatDate }}</span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="article-item-article flex-start"
-                         @click.stop="jumpToDetail">
-                        <img class="article-cover"
-                             :src="item.imageUrl" />
-                        <div class="article-box">
-                            <h4>{{ item.title }}</h4>
-                            <p>
-                                {{ item.description }}
-                            </p>
+                        <div class="article-item-article flex-start"
+                             @click.stop="jumpToDetail">
+                            <img class="article-cover"
+                                 :src="item.imageUrl" />
+                            <div class="article-box">
+                                <h4>{{ item.title }}</h4>
+                                <p>
+                                    {{ item.description }}
+                                </p>
+                            </div>
                         </div>
+                        <!-- 操作栏 -->
+                        <div class="article-item-bottom"
+                             @click.stop="">
+                            <ul class="flex-space-around">
+                                <li class="flex-center"
+                                    title="点亮你的小心心">
+                                    <!-- 点赞 -->
+                                    <img :src="!item.isLike ? like : selectLike"
+                                         alt=""
+                                         @click="handleLike(item)" />
+                                    <span @click="handleLike(item)"
+                                          :class="{ active: item.isLike }">{{ item.likes }}</span>
+                                </li>
+                                <li class="flex-center"
+                                    title="评论数量">
+                                    <img :src="leave"
+                                         alt="" />
+                                    <span>{{ item.comment }}</span>
+                                </li>
+                                <li class="flex-center"
+                                    title="阅读量">
+                                    <img :src="eye"
+                                         alt="" />
+                                    <span>{{ item.pageViews }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <notification ref="notification" />
                     </div>
-                    <!-- 操作栏 -->
-                    <div class="article-item-bottom"
-                         @click.stop="">
-                        <ul class="flex-space-around">
-                            <li class="flex-center"
-                                title="点亮你的小心心">
-                                <!-- 点赞 -->
-                                <img :src="!item.isLike ? like : selectLike"
-                                     alt=""
-                                     @click="handleLike(item)" />
-                                <span @click="handleLike(item)"
-                                      :class="{ active: item.isLike }">{{ item.likes }}</span>
-                            </li>
-                            <li class="flex-center"
-                                title="评论数量">
-                                <img :src="leave"
-                                     alt="" />
-                                <span>{{ item.comment }}</span>
-                            </li>
-                            <li class="flex-center"
-                                title="阅读量">
-                                <img :src="eye"
-                                     alt="" />
-                                <span>{{ item.pageViews }}</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <notification ref="notification" />
                 </div>
-            </div>
-            <!-- <template>
+            </template>
+
+            <template v-else>
                 <p class="article-list-content-empty">正在加急创作中！！</p>
-            </template> -->
+            </template>
         </section>
         <!-- 加载组件 -->
         <!-- 弹窗详情 -->
