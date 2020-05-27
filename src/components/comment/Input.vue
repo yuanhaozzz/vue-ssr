@@ -1,6 +1,7 @@
 <template>
     <div :class="{ 'common-comment-wrapper': true, focused: showBottom }"
          ref="commonCommentWrapper"
+         @click.stop=""
          :style="{ 'background-color': backgroundColor }">
         <!-- 登录组件 -->
         <login ref="login"
@@ -113,6 +114,9 @@ export default {
         submit (e) {
             // 用户数据
             let userinfo = '';
+            if (!this.content) {
+                return
+            }
             if (this.isShowLogin) {
                 userinfo = this.$refs.login.getUserinfo();
             } else {
