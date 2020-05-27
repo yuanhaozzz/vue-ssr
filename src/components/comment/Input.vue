@@ -1,7 +1,7 @@
 <template>
-    <div :class="{'common-comment-wrapper': true, 'focused': showBottom}"
+    <div :class="{ 'common-comment-wrapper': true, focused: showBottom }"
          ref="commonCommentWrapper"
-         :style="{'background-color': backgroundColor}">
+         :style="{ 'background-color': backgroundColor }">
         <!-- 登录组件 -->
         <login ref="login"
                v-if="isShowLogin" />
@@ -10,19 +10,22 @@
             <!-- 默认头像 -->
             <img :src="avatar || commentAvatar"
                  alt=""
-                 class="common-comment-avatar">
+                 class="common-comment-avatar" />
             <!-- 右侧内容 -->
             <div class="common-comment-right">
                 <!-- 输入框 -->
                 <div class="common-comment-right-box">
                     <div contenteditable="true"
                          :placeholder="placeholder"
-                         :class="{'common-comment-right-input': true, 'before': !content}"
+                         :class="{
+                            'common-comment-right-input': true,
+                            before: !content,
+                        }"
                          @input="handleInput"
                          @focus="handleFocus(1)"
                          @blur="handleFocus(0)"
                          ref="input">
-                        {{content}}
+                        {{ content }}
                     </div>
                 </div>
                 <!-- 提交 -->
@@ -39,63 +42,69 @@
 </template>
 
 <script>
-import CommentAvatar from '@/assets/images/comment-avatar.png'
-import Login from '@/components/login'
-import Message from '@/components/message'
-import { getLocalStorage } from '@/utils/common'
+import CommentAvatar from '@/assets/images/comment-avatar.png';
+import Login from '@/components/login';
+import Message from '@/components/message';
+import { getLocalStorage } from '@/utils/common';
 export default {
     props: {
         avatar: {
             type: String,
-            default: ''
+            default: '',
         },
         placeholder: {
             type: String,
-            default: '输入评论...'
+            default: '输入评论...',
         },
         backgroundColor: {
             type: String,
-            default: '#fafbfc'
-        }
+            default: '#fafbfc',
+        },
     },
     data: () => {
         return {
             commentAvatar: CommentAvatar,
             content: '',
             showBottom: false,
-            isShowLogin: false
-        }
+            isShowLogin: false,
+        };
     },
     mounted () {
-        this.initPage()
+        this.initPage();
     },
     methods: {
         /**
          * 初始化页面
          */
         initPage () {
-            this.$refs.input.innerText = ''
-            if (!getLocalStorage('name')) {
-                this.isShowLogin = true
-            }
-            // document.body.addEventListener('click', e => {
+            this.$refs.input.innerText = '';
+        },
 
-            // })
+        /**
+         * 展示登录
+         */
+        showLogin () {
+            if (!getLocalStorage('name')) {
+                this.isShowLogin = true;
+            }
         },
 
         /**
          * 受控
          */
         handleInput (e) {
-            this.content = e.target.innerText
+            this.content = e.target.innerText;
         },
 
         /**
          * 获取/离开 焦点
-         * @param {Number} type 0 离开焦点 1 获取焦点 
+         * @param {Number} type 0 离开焦点 1 获取焦点
          */
         handleFocus (type) {
-            this.showBottom = type
+            if (type === 1) {
+                this.showLogin();
+            }
+            this.showBottom = type;
         },
 
         /**
@@ -103,25 +112,26 @@ export default {
          */
         submit (e) {
             // 用户数据
-            let userinfo = ''
+            let userinfo = '';
             if (this.isShowLogin) {
-                userinfo = this.$refs.login.getUserinfo()
+                userinfo = this.$refs.login.getUserinfo();
             } else {
                 userinfo = {
-                    avatar: `http://yuanhao-web.cn/server/uploads/avatar${getLocalStorage('avatar') || 1}.jpg`,
+                    avatar: `http://yuanhao-web.cn/server/uploads/avatar${getLocalStorage(
+                        'avatar'
+                    ) || 1}.jpg`,
                     email: getLocalStorage('email'),
                     name: getLocalStorage('name'),
-                    url: getLocalStorage('url')
-                }
+                    url: getLocalStorage('url'),
+                };
             }
-            this.$emit('submit', e, { content: this.content, userinfo })
-            this.content = ''
-            this.$refs.input.innerText = ''
-            this.isShowLogin = false
-
+            this.$emit('submit', e, { content: this.content, userinfo });
+            this.content = '';
+            this.$refs.input.innerText = '';
+            this.isShowLogin = false;
         },
         keepLastIndex (obj) {
-            obj = obj || this.$refs.input
+            obj = obj || this.$refs.input;
             if (window.getSelection) {
                 //ie11 10 9 ff safari
                 obj.focus(); //解决ff不获取焦点无法定位问题
@@ -136,13 +146,13 @@ export default {
                 range.collapse(false); //光标移至最后
                 range.select();
             }
-        }
+        },
     },
     components: {
         Login,
-        Message
-    }
-}
+        Message,
+    },
+};
 </script>
 <style lang="less" scoped>
 .common-comment-wrapper {

@@ -6,7 +6,7 @@
             <!-- 路由 -->
             <section class="center-router entry-center">
                 <transition name="translate">
-                    <router-view  :key="key"></router-view>
+                    <router-view :key="key"></router-view>
                 </transition>
             </section>
             <!-- 右侧栏 -->
@@ -19,11 +19,11 @@
 import MainLeft from './MainLeft';
 import MainRight from './MainRight';
 export default {
-    computed:{
-	    key(){
-	        return this.$route.path + Math.random();
-	    }
-	},
+    computed: {
+        key () {
+            return this.$route.path + Math.random();
+        }
+    },
     components: {
         MainLeft,
         MainRight,
@@ -41,10 +41,12 @@ export default {
         align-items: flex-start;
         .center-router {
             width: 53%;
+            position: relative;
+            height: 100%;
         }
-        .test{
-             min-height: 100px;
-                width: 22%;
+        .test {
+            min-height: 100px;
+            width: 22%;
         }
     }
 }
@@ -52,20 +54,17 @@ export default {
 <style>
 .translate-enter-active,
 .translate-leave-active {
-    transition: all 1s;
+    transition: all 0.4s;
 }
 
-.translate-enter /* .fade-leave-active below version 2.1.8 */ {
-    transform: translateY(1200px);
-}
+.translate-enter,
 .translate-leave-to {
-    transform: translateY(1400px);
+    opacity: 0;
 }
 
 .translate-enter-to,
 .translate-leave {
-    transform: translateY(0px);
+    transition-delay: 0.4s;
+    opacity: 1;
 }
-
-
 </style>

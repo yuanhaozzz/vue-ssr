@@ -6,11 +6,13 @@
              alt="">
         <!-- 姓名 -->
         <input type="text"
+               required="required"
                v-model.trim="name"
                placeholder="Name"
                @blur="handleInfo('name')">
         <!-- 邮箱 -->
         <input type="email"
+               required="required"
                v-model.trim="email"
                placeholder="Email"
                @blur="handleInfo('email')">

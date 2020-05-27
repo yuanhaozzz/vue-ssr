@@ -1,56 +1,47 @@
 <template>
     <div class="article-item-container">
         <div class="article-item-info flex-start">
-            <img src="https://www.wnooo.cn/content/uploadfile/201905/thum52-37521557483025.jpg" />
+            <img
+                src="https://www.wnooo.cn/content/uploadfile/201905/thum52-37521557483025.jpg"
+            />
             <div class="article-item-info-box">
                 <h4>浩哥</h4>
-                <span>{{ articleItem.releaseTime | formatDate}}</span>
+                <span>{{ articleItem.releaseTime | formatDate }}</span>
             </div>
         </div>
 
-        <div class="article-item-article flex-start">
-            <img class="article-cover"
-                 :src="articleItem.imageUrl" />
+        <div class="article-item-article flex-start" @click.stop="jumpToDetail">
+            <img class="article-cover" :src="articleItem.imageUrl" />
             <div class="article-box">
-                <h4>{{articleItem.title}}</h4>
+                <h4>{{ articleItem.title }}</h4>
                 <p>
-                    {{articleItem.description}}
+                    {{ articleItem.description }}
                 </p>
             </div>
         </div>
         <!-- 操作栏 -->
-        <div class="article-item-bottom"
-             @click.stop="">
+        <div class="article-item-bottom" @click.stop="">
             <ul class="flex-space-around">
-                <li class="flex-center"
-                    title="点亮你的小心心">
-                    <template v-if="!articleItem.isLike">
-                        <img :src="like"
-                             alt=""
-                             @click="handleLike">
-                        <span @click="handleLike"
-                              :class="{'active': articleItem.isLike}">{{articleItem.likes}}</span>
-                    </template>
-                    <template v-else>
-                        <img :src="selectLike"
-                             alt=""
-                             @click="handleLiked">
-                        <span @click="handleLiked"
-                              :class="{'active': articleItem.isLike}">{{articleItem.likes}}</span>
-                    </template>
-
+                <li class="flex-center" title="点亮你的小心心">
+                    <!-- 点赞 -->
+                    <img
+                        :src="!articleItem.isLike ? like : selectLike"
+                        alt=""
+                        @click="handleLike(articleItem.isLike)"
+                    />
+                    <span
+                        @click="handleLike(articleItem.isLike)"
+                        :class="{ active: articleItem.isLike }"
+                        >{{ articleItem.likes }}</span
+                    >
                 </li>
-                <li class="flex-center"
-                    title="评论数量">
-                    <img :src="leave"
-                         alt="">
-                    <span>{{articleItem.comment}}</span>
+                <li class="flex-center" title="评论数量">
+                    <img :src="leave" alt="" />
+                    <span>{{ articleItem.comment }}</span>
                 </li>
-                <li class="flex-center"
-                    title="阅读量">
-                    <img :src="eye"
-                         alt="">
-                    <span>{{articleItem.pageViews}}</span>
+                <li class="flex-center" title="阅读量">
+                    <img :src="eye" alt="" />
+                    <span>{{ articleItem.pageViews }}</span>
                 </li>
             </ul>
         </div>
@@ -59,18 +50,18 @@
 </template>
 
 <script>
-import Like from '@/assets/images/like.png'
-import SelectLike from '@/assets/images/select-like.png'
-import Leave from '@/assets/images/leave.png'
-import Eye from '@/assets/images/eye.png'
-import { setLocalStorage, getLocalStorage } from '@/utils/common'
-import Notification from '@/components/notification'
+import Like from '@/assets/images/like.png';
+import SelectLike from '@/assets/images/select-like.png';
+import Leave from '@/assets/images/leave.png';
+import Eye from '@/assets/images/eye.png';
+import { setLocalStorage, getLocalStorage } from '@/utils/common';
+import Notification from '@/components/notification';
 export default {
     props: {
         article: {
             type: Object,
-            default: () => { }
-        }
+            default: () => {},
+        },
     },
     data: () => {
         return {
@@ -78,48 +69,60 @@ export default {
             selectLike: SelectLike,
             leave: Leave,
             eye: Eye,
-            articleItem: {}
-        }
+            articleItem: {},
+        };
     },
-    mounted () {
-        this.init()
+    mounted() {
+        this.init();
     },
     methods: {
         /**
+         * 跳转详情
+         */
+        jumpToDetail() {
+            this.$router.push({
+                path: '/blog/content/detail',
+                query: {
+                    id: this.article.id,
+                },
+            });
+        },
+        /**
          * 初始化详情
          */
-        init () {
-            this.articleItem = this.article
-            this.$set(this.articleItem, 'isLike', getLocalStorage('articleItem' + this.articleItem.id))
+        init() {
+            this.articleItem = this.article;
+            this.$set(
+                this.articleItem,
+                'isLike',
+                getLocalStorage('articleItem' + this.articleItem.id)
+            );
         },
 
         /**
-        *   点赞
+         *   点赞
          */
-        handleLike () {
-            this.articleItem.isLike = true
-            ++this.articleItem.likes
-            setLocalStorage('articleItem' + this.articleItem.id, '1')
+        handleLike(isLike) {
+            if (!isLike) {
+                this.articleItem.isLike = true;
+                ++this.articleItem.likes;
+                setLocalStorage('articleItem' + this.articleItem.id, '1');
 
-            let { likes, id } = this.articleItem;
-            let params = {
-                id,
-                likes
-            };
-            this.$http.post('/blog/client/update/data', params);
+                let { likes, id } = this.articleItem;
+                let params = {
+                    id,
+                    likes,
+                };
+                this.$http.post('/blog/client/update/data', params);
+            } else {
+                this.$refs.notification.open();
+            }
         },
-
-        /**
-         * 已点赞
-         */
-        handleLiked () {
-            this.$refs.notification.open()
-        }
     },
     components: {
-        Notification
-    }
-}
+        Notification,
+    },
+};
 </script>
 
 <style lang="less" scoped>

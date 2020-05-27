@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="article-detail-wrapper"
-             v-if="!isLoad">
+             v-if="detail">
             <detail ref="detail"
                     :isLayer="false"
                     :detail="detail.detail" />
@@ -18,50 +18,50 @@
                               @submit="submit" />
             </div>
         </div>
-        <Loading v-else />
     </div>
-
 </template>
 
 <script>
-import Detail from './components/Detail'
-import CommentInput from '@/components/comment/Input'
-import CommentList from './components/CommentList'
-import Loading from '@/components/loading/Loading'
-import { getLocalStorage, setLocalStorage } from '@/utils/common'
+import Detail from './components/Detail';
+import CommentInput from '@/components/comment/Input';
+import CommentList from './components/CommentList';
+import {
+    getLocalStorage,
+    setLocalStorage,
+    showLoading,
+    hideLoading,
+} from '@/utils/common';
 export default {
     data: () => {
         return {
-            isLoad: true,
             detail: null,
-        }
+        };
     },
     mounted () {
-        this.getDetail()
-
+        this.getDetail();
     },
     methods: {
         /**
          * 点赞
          */
         handleLike (level1, level2 = { id: 0 }) {
-            let articleId = this.detail.detail.id
-            let key = `article-${articleId}-level1-${level1.id}-level2-${level2.id}`
-            let favorite = getLocalStorage(key)
+            let articleId = this.detail.detail.id;
+            let key = `article-${articleId}-level1-${level1.id}-level2-${level2.id}`;
+            let favorite = getLocalStorage(key);
 
             // 判断 一、二级评论
             if (!level2.id) {
-                this.handleLevel1(favorite, level1, key)
+                this.handleLevel1(favorite, level1, key);
             } else {
-                this.handleLevel2(favorite, level2, key)
+                this.handleLevel2(favorite, level2, key);
             }
 
             let params = {
                 id: level2.id || level1.id,
                 type: level2.id ? 2 : 1,
-                favorite: !favorite
-            }
-            this.$http.post('/blog/client/comment/update', params)
+                favorite: !favorite,
+            };
+            this.$http.post('/blog/client/comment/update', params);
         },
 
         /**
@@ -69,13 +69,13 @@ export default {
          */
         handleLevel1 (favorite, level1, key) {
             if (!favorite) {
-                level1.favorite = ++level1.favorite
-                setLocalStorage(key, 1)
-                level1.showFavorite = true
+                level1.favorite = ++level1.favorite;
+                setLocalStorage(key, 1);
+                level1.showFavorite = true;
             } else {
-                level1.favorite = --level1.favorite
-                setLocalStorage(key, 0)
-                level1.showFavorite = false
+                level1.favorite = --level1.favorite;
+                setLocalStorage(key, 0);
+                level1.showFavorite = false;
             }
         },
 
@@ -84,13 +84,13 @@ export default {
          */
         handleLevel2 (favorite, level2, key) {
             if (!favorite) {
-                level2.favorite = ++level2.favorite
-                setLocalStorage(key, 1)
-                level2.showFavorite = true
+                level2.favorite = ++level2.favorite;
+                setLocalStorage(key, 1);
+                level2.showFavorite = true;
             } else {
-                level2.favorite = --level2.favorite
-                setLocalStorage(key, 0)
-                level2.showFavorite = false
+                level2.favorite = --level2.favorite;
+                setLocalStorage(key, 0);
+                level2.showFavorite = false;
             }
         },
 
@@ -98,12 +98,16 @@ export default {
          * 获取详情
          */
         getDetail () {
-            this.$http.post('/blog/client/article/detail', { articleId: this.$route.query.id })
-                .then(res => {
-                    this.detail = res
-                    this.isLoad = false
+            showLoading();
+            this.$http
+                .post('/blog/client/article/detail', {
+                    articleId: this.$route.query.id,
                 })
-                .catch(err => {
+                .then((res) => {
+                    this.detail = res;
+                    hideLoading();
+                })
+                .catch((err) => {
                     console.log(err);
                 });
         },
@@ -112,13 +116,16 @@ export default {
          * 获取评论列表
          */
         getCommentList () {
-            console.log(this.$route.query.id)
-            this.$http.post('/blog/client/comment/list', { articleId: this.$route.query.id })
-                .then(res => {
-                    this.detail.commentList = res.list
-                    debugger
+            console.log(this.$route.query.id);
+            this.$http
+                .post('/blog/client/comment/list', {
+                    articleId: this.$route.query.id,
                 })
-                .catch(err => {
+                .then((res) => {
+                    this.detail.commentList = res.list;
+                    debugger;
+                })
+                .catch((err) => {
                     console.log(err);
                 });
         },
@@ -130,7 +137,14 @@ export default {
          * @param {String} value        评论内容
          */
         submit (e, value, type = 1) {
-            let { content, id, userName, parentId, userinfo: { avatar, name } } = value
+            let {
+                content,
+                id,
+                userName,
+                parentId,
+                userinfo: { avatar, name },
+            } = value;
+
             let params = {
                 type,
                 articleId: this.$route.query.id,
@@ -138,25 +152,25 @@ export default {
                 userId: 1,
                 userName: name,
                 comment: ++this.detail.detail.comment,
-                avatar
-            }
+                avatar,
+            };
+
             if (type === 2) {
-                params.parentId = parentId || id
-                params.parentName = userName
-                params.userName = name
-                params.userId = 14
+                params.parentId = parentId || id;
+                params.parentName = userName;
+                params.userName = name;
+                params.userId = 14;
             }
-            this.$http.post('/blog/client/comment/add', params).then(res => {
-                this.getDetail()
-            })
-        }
+            this.$http.post('/blog/client/comment/add', params).then((res) => {
+                this.getDetail();
+            });
+        },
     },
     components: {
         Detail,
         CommentInput,
         CommentList,
-        Loading
-    }
+    },
 };
 </script>
 

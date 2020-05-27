@@ -42,7 +42,7 @@ body {
 img {
     display: block;
 }
-button{
+button {
     cursor: pointer;
 }
 
@@ -73,15 +73,18 @@ button{
     }
 }
 
-
-.before::before{
+.before::before {
     content: attr(placeholder);
     position: absolute;
-    opacity: .4;
+    opacity: 0.4;
     pointer-events: none;
     user-select: none;
 }
-
+input,
+button,
+textarea {
+    outline: none;
+}
 html,
 body,
 div,

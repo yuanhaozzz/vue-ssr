@@ -1,4 +1,4 @@
-export const filterField = object => {
+export const filterField = (object) => {
     if (!object) {
         return {};
     }
@@ -27,4 +27,20 @@ export const setLocalStorage = (key, value) => {
  */
 export const getLocalStorage = (key) => {
     return localStorage.getItem(key) && JSON.parse(localStorage.getItem(key));
+};
+
+/**
+ * 展示loading
+ */
+export const showLoading = () => {
+    let elLoading = document.querySelector('.loading-wrapper');
+    elLoading.style.display = 'block';
+};
+
+/**
+ * 隐藏loading
+ */
+export const hideLoading = () => {
+    let elLoading = document.querySelector('.loading-wrapper');
+    elLoading.style.display = 'none';
 };

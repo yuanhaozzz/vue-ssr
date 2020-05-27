@@ -2,20 +2,28 @@
     <aside class="main-right entry">
         <!-- 搜索 -->
         <div class="main-right-input">
-            <input type="text" v-model.trim="keyword" placeholder="月亮不睡你不睡" @keydown.13="searchKeyWord"/>
+            <input type="text"
+                   v-model.trim="keyword"
+                   placeholder="月亮不睡你不睡"
+                   @keydown.13="searchKeyWord" />
         </div>
         <!-- 公告 -->
         <div class="main-right-message">
             <h3>公告</h3>
             <p>
-                博客正式上线啦，没有用任何脚手架，都是从零搭建，文章正在准备中，迅速来围观呀！！
+                2020/05/25 文章新增评论功能
+            </p>
+            <p>
+                2020/05/27 增加留言板功能
             </p>
         </div>
         <!-- 热门文章 -->
         <div class="main-right-hot">
             <h3>热门文章</h3>
             <ul>
-                <li v-for="item of homeList.hotList" :key="item.id" @click="jumpToDetail(item)">
+                <li v-for="item of homeList.hotList"
+                    :key="item.id"
+                    @click="jumpToDetail(item)">
                     <h4>{{item.title}}</h4>
                     <span>{{item.pageViews}}次围观</span>
                 </li>
@@ -25,9 +33,9 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
-     asyncData({ store, route }) {
+    asyncData ({ store, route }) {
         // 触发 action 后，会返回 Promise
         return store.dispatch('article/getHomeList');
     },
@@ -40,7 +48,7 @@ export default {
         /**
          * 搜索
          */
-        searchKeyWord() {
+        searchKeyWord () {
             let params = {
                 type: 5,
                 keyword: this.keyword
@@ -50,17 +58,17 @@ export default {
         /**
          * 跳转详情
          */
-        jumpToDetail(item) {
+        jumpToDetail (item) {
             this.$router.push({
-                  path: '/blog/content/detail',
-                  query: {
-                      id: item.id
-                  }
-              })
+                path: '/blog/content/detail',
+                query: {
+                    id: item.id
+                }
+            })
         },
         ...mapActions('article', ['getHomeList'])
     },
-       computed: {
+    computed: {
         ...mapGetters('article', ['homeList']),
     },
 };
