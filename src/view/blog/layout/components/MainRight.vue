@@ -1,5 +1,5 @@
 <template>
-    <aside class="main-right entry">
+    <aside class="main-right">
         <!-- 搜索 -->
         <div class="main-right-input">
             <input type="text"

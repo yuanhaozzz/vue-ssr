@@ -1,5 +1,5 @@
 <template>
-    <aside class="main-left entry">
+    <aside class="main-left">
         <!-- 介绍 -->
         <div class="main-left-user">
             <div class="main-left-user-background"></div>
@@ -20,7 +20,7 @@
                 </li>
             </ul>
             <div class="main-left-user-avatar"></div>
-                
+
         </div>
         <!-- 个人档 -->
         <div class="main-left-about">
@@ -29,19 +29,23 @@
             </h2>
             <ul>
                 <li class="flex-start">
-                    <img :src="qqImage" alt="" />
+                    <img :src="qqImage"
+                         alt="" />
                     <p>526100629</p>
                 </li>
                 <li class="flex-start">
-                    <img :src="wechatImage" alt="" />
+                    <img :src="wechatImage"
+                         alt="" />
                     <p>yh526100629</p>
                 </li>
                 <li class="flex-start">
-                    <img :src="houseImage" alt="" />
+                    <img :src="houseImage"
+                         alt="" />
                     <p>www.yuanhao-web.cn</p>
                 </li>
                 <li class="flex-start">
-                    <img :src="emailImage" alt="" />
+                    <img :src="emailImage"
+                         alt="" />
                     <p>yuanhao_zzz@163.com</p>
                 </li>
             </ul>
@@ -49,13 +53,15 @@
         <!-- 点赞 -->
         <div class="main-left-good flex-center">
             <h3>Do you like me?</h3>
-            <div class="flex-center main-left-good-box" @click="handleFavorite">
-                <img :src="heartImage" alt="" />
+            <div class="flex-center main-left-good-box"
+                 @click="handleFavorite">
+                <img :src="heartImage"
+                     alt="" />
                 <span>{{statisticst.favorite}}</span>
             </div>
         </div>
         <!-- 通知弹窗 -->
-        <notification ref="notification"/>
+        <notification ref="notification" />
     </aside>
 </template>
 
@@ -67,7 +73,7 @@ import EmailImage from '@/assets/images/email.png';
 import HeartImage from '@/assets/images/heart.png';
 
 import Notification from '@/components/notification'
-import {mapGetters, mapMutations} from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 export default {
     data: () => {
         return {
@@ -82,23 +88,23 @@ export default {
         /**
          * 首页点赞
          */
-        handleFavorite() {
+        handleFavorite () {
             let favorite = localStorage.getItem('home-favorite')
             if (favorite) {
                 this.$refs.notification.open()
             } else {
-                this.$http.post('/blog/client/update/statisticst', {favorite:1}).then(res => {
+                this.$http.post('/blog/client/update/statisticst', { favorite: 1 }).then(res => {
                     ++this.statisticst.favorite
-                    this.setStatisticst({statisticst: this.statisticst})
+                    this.setStatisticst({ statisticst: this.statisticst })
                     localStorage.setItem('home-favorite', 1)
                 })
             }
-          
+
         },
         ...mapMutations('article', ['setStatisticst'])
     },
     computed: {
-         ...mapGetters('article', ['statisticst']),
+        ...mapGetters('article', ['statisticst']),
     },
     components: {
         Notification
@@ -125,9 +131,9 @@ export default {
             height: 120px;
             background: url(https://images.pexels.com/photos/572056/pexels-photo-572056.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=700&h=300)
                 no-repeat center;
-                background-size: 100%;
+            background-size: 100%;
         }
-        
+
         h2 {
             padding-top: 5px;
             letter-spacing: 0;
@@ -167,10 +173,10 @@ export default {
             height: 64px;
             border: 3px solid #fff;
             border-radius: 100%;
-            background: url(https://images.pexels.com/photos/2733657/pexels-photo-2733657.jpeg?auto=compress&cs=tinysrgb&dpr=3&w=2000) no-repeat center;
+            background: url(https://images.pexels.com/photos/2733657/pexels-photo-2733657.jpeg?auto=compress&cs=tinysrgb&dpr=3&w=2000)
+                no-repeat center;
             background-size: cover;
             background-color: #fff;
-
         }
     }
     .main-left-about {

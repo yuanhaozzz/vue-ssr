@@ -4,10 +4,10 @@
             <!-- 左侧栏 -->
             <main-left></main-left>
             <!-- 路由 -->
-            <section class="center-router entry-center">
-                <transition name="translate">
-                    <router-view :key="key"></router-view>
-                </transition>
+            <section class="center-router">
+                <!-- <transition name="translate"> -->
+                <router-view :key="key"></router-view>
+                <!-- </transition> -->
             </section>
             <!-- 右侧栏 -->
             <main-right></main-right>
@@ -40,7 +40,7 @@ export default {
         margin: 0 auto;
         align-items: flex-start;
         .center-router {
-            width: 53%;
+            width: 600px;
             position: relative;
             height: 100%;
         }

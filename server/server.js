@@ -5,12 +5,12 @@ let path = require('path');
 const LRU = require('lru-cache');
 const { createBundleRenderer } = require('vue-server-renderer');
 let isProd = process.env.NODE_ENV === 'production';
-let resolve = pathname => path.resolve(__dirname, pathname);
+let resolve = (pathname) => path.resolve(__dirname, pathname);
 let templatePath = resolve('../public/template.html');
 
 let renderer, readyPromise;
 
-function createRenderer (bundle, options) {
+function createRenderer(bundle, options) {
     return createBundleRenderer(
         bundle,
         Object.assign(options, {
@@ -19,8 +19,8 @@ function createRenderer (bundle, options) {
             // 用于组件缓存
             cache: new LRU({
                 max: 1000,
-                maxAge: 1000 * 60 * 15
-            })
+                maxAge: 1000 * 60 * 15,
+            }),
         })
     );
 }
@@ -32,7 +32,7 @@ if (isProd) {
     let template = fs.readFileSync(templatePath, 'utf-8');
     renderer = createRenderer(serverBundle, {
         template,
-        clientManifest
+        clientManifest,
     });
 } else {
     readyPromise = require('./devServer')(
@@ -44,11 +44,11 @@ if (isProd) {
     );
 }
 
-function render (req, res) {
+function render(req, res) {
     const s = Date.now();
     res.setHeader('Content-Type', 'text/html');
 
-    const handleError = err => {
+    const handleError = (err) => {
         if (err.url) {
             res.redirect(err.url);
         } else if (err.code === 404) {
@@ -60,11 +60,10 @@ function render (req, res) {
             console.error(err.stack);
         }
     };
-    console.log(req.query, '----');
     const context = {
         title: '浩哥的个人博客',
         url: req.url,
-        query: req.query
+        query: req.query,
     };
     renderer.renderToString(context, (err, html) => {
         if (err) {
@@ -85,8 +84,8 @@ app.get(
     isProd
         ? render
         : (req, res) => {
-            readyPromise.then(() => render(req, res));
-        }
+              readyPromise.then(() => render(req, res));
+          }
 );
 
 app.listen(3001, () => {

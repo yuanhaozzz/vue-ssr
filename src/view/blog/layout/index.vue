@@ -1,5 +1,5 @@
 <template>
-    <div class="blog-wrapper">
+    <div :class="{'blog-wrapper': true, 'loaded': loaded}">
         <blog-header></blog-header>
         <blog-main></blog-main>
         <!-- 返回顶部 -->
@@ -16,22 +16,18 @@ import BlogHeader from './components/Header';
 import BlogMain from './components/BlogMain';
 import Loading from '@/components/loading/Loading';
 import Rocket from '@/assets/images/rocket.svg';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 export default {
-    asyncData ({ store, route }) {
-        // 触发 action 后，会返回 Promise
-        return store
-            .dispatch('article/getHomeList', { type: 0 })
-            .then(() => store.dispatch('article/getStatisticst'));
-    },
     data: () => {
         return {
             rocket: Rocket,
             rocketShow: false,
+            loaded: false
         };
     },
     mounted () {
         this.handleScroll();
+        this.loaded = true
     },
     methods: {
         /**
@@ -66,6 +62,9 @@ export default {
         },
         ...mapActions('article', ['getHomeList']),
     },
+    computed: {
+        ...mapGetters('article', ['homeList']),
+    },
     components: {
         BlogHeader,
         BlogMain,
@@ -78,6 +77,8 @@ export default {
 .blog-wrapper {
     height: 100%;
     background-color: #f9f9ff;
+    opacity: 0;
+    transition: all 0.2;
     .blog-content-rocket {
         position: fixed;
         bottom: -60px;
@@ -89,5 +90,8 @@ export default {
     .rocket-show {
         bottom: 60px;
     }
+}
+.loaded {
+    opacity: 1;
 }
 </style>

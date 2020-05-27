@@ -116,7 +116,6 @@ export default {
          * 获取评论列表
          */
         getCommentList () {
-            console.log(this.$route.query.id);
             this.$http
                 .post('/blog/client/comment/list', {
                     articleId: this.$route.query.id,
