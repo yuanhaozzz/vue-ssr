@@ -192,6 +192,17 @@ export default {
         padding-left: 80px;
         padding-right: 30px;
         background-color: #fff;
+        padding-bottom: 40px;
+    }
+}
+@media screen and (max-width: 756px) {
+    .article-detail-wrapper {
+        .article-detail-comment {
+            padding: 10px 0px 0;
+        }
+        .article-detail-comment-list {
+            padding-left: 10px;
+        }
     }
 }
 </style>

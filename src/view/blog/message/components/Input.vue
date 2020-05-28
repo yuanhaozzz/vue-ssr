@@ -198,4 +198,13 @@ export default {
     background-color: #fff;
     // display: none;
 }
+@media screen and (max-width: 756px) {
+    .message-input-wrapper {
+        .message-input-center {
+            textarea {
+                background-size: 100px;
+            }
+        }
+    }
+}
 </style>

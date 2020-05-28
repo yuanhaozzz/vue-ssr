@@ -87,6 +87,7 @@ export default {
     },
     mounted () {
         this.initPage();
+        console.log(window.innerWidth)
     },
     methods: {
         /**
@@ -226,14 +227,32 @@ export default {
         }
     }
 }
+@media screen and (max-width: 756px) {
+    .article-detail-container {
+        .article-detail-box {
+            width: 100%;
+        }
+        .article-detail-content {
+            box-sizing: border-box;
+            padding: 0 10px;
+        }
+    }
+}
 </style>
 <style lang="less">
+@media screen and (max-width: 756px) {
+    .article-detail-container {
+        pre {
+            width: 335px;
+            margin: 0 auto;
+        }
+    }
+}
 .article-detail-container {
     pre {
         position: relative;
         line-height: 1.5;
         font-family: Menlo, Monaco, Consolas, Courier New, monospace;
-        overflow: auto;
         font-size: 14px;
         code {
             padding: 18px 15px 12px;

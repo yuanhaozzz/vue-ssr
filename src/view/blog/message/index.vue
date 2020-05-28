@@ -285,4 +285,13 @@ export default {
         z-index: 99;
     }
 }
+@media screen and (max-width: 756px) {
+    .message-wrapper {
+        .message-layer {
+            .message-input-position {
+                min-width: 300px;
+            }
+        }
+    }
+}
 </style>

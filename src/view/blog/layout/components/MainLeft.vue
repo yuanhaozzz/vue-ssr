@@ -238,4 +238,10 @@ export default {
         }
     }
 }
+
+@media screen and (max-width: 756px) {
+    .main-left {
+        display: none;
+    }
+}
 </style>

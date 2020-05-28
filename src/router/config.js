@@ -1,13 +1,3 @@
-let Layout = () => import('@/view/layout');
-let Home = () => import('@/view/home');
-let Article = () => import('@/view/article');
-let Mood = () => import('@/view/mood');
-let Self = () => import('@/view/self');
-// // 文章详情
-// let ArticleDetail = () => import('@/view/home/page/ArticleDetail');
-// 分享
-let ShareDay = () => import('@/view/wechar/ShareLiChao');
-
 // 重构首页
 let contentLayout = () => import('@/view/blog/layout');
 // 文章列表
@@ -17,48 +7,17 @@ let ArticleDetail = () => import('@/view/blog/article/detail');
 // 留言板
 let Message = () => import('@/view/blog/message');
 
+// 测试
+let Test = () => import('@/view/test');
+
 export default [
     {
         path: '/',
         redirect: '/blog/content',
     },
     {
-        path: '/blog/client',
-        component: Layout,
-        children: [
-            {
-                path: '',
-                component: Home,
-            },
-            {
-                path: 'home',
-                component: Home,
-            },
-            {
-                path: 'article',
-                component: Article,
-            },
-            {
-                path: 'mood',
-                component: Mood,
-            },
-            {
-                path: 'self',
-                component: Self,
-            },
-            {
-                path: 'message',
-                component: Message,
-            },
-        ],
-    },
-    {
-        path: '/blog/article/detail',
-        component: ArticleDetail,
-    },
-    {
-        path: '/blog/share/day',
-        component: ShareDay,
+        path: '/test',
+        component: Test,
     },
     {
         path: '/blog/content',

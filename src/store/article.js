@@ -7,6 +7,7 @@ export default {
         detail: {},
         statisticst: {},
         messageList: [],
+        sidebar: false,
     },
     getters: {
         homeList: (state) => {
@@ -23,6 +24,9 @@ export default {
 
         messageList: (state) => {
             return state.messageList;
+        },
+        sidebar: (state) => {
+            return state.sidebar;
         },
     },
     mutations: {
@@ -44,6 +48,9 @@ export default {
         setMessage(state, payload) {
             let { list } = payload;
             state.messageList = list;
+        },
+        showSidebar(state, status) {
+            state.sidebar = status;
         },
     },
     actions: {

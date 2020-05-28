@@ -148,4 +148,10 @@ export default {
         }
     }
 }
+
+@media screen and (max-width: 756px) {
+    .main-right {
+        display: none;
+    }
+}
 </style>

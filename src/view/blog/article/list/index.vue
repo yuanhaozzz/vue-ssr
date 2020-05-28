@@ -16,7 +16,7 @@
             <template v-if="homeList.list.length > 0">
                 <div v-for="item of homeList.list"
                      :key="item.id"
-                     @click="jumpToDetail(item)">
+                     @click="showLayerDetail(item)">
                     <!-- 子组件 -->
                     <div class="article-item-container">
                         <div class="article-item-info flex-start">
@@ -28,9 +28,11 @@
                         </div>
 
                         <div class="article-item-article flex-start"
-                             @click.stop="jumpToDetail">
-                            <img class="article-cover"
-                                 :src="item.imageUrl" />
+                             @click.stop="jumpToDetail(item)">
+                            <div class="article-cover-box"
+                                 :style="{'background': `url(${item.imageUrl}) no-repeat center`, 'backgroundSize': '170px'}">
+
+                            </div>
                             <div class="article-box">
                                 <h4>{{ item.title }}</h4>
                                 <p>
@@ -43,13 +45,12 @@
                              @click.stop="">
                             <ul class="flex-space-around">
                                 <li class="flex-center"
+                                    @click="handleLike(item)"
                                     title="点亮你的小心心">
                                     <!-- 点赞 -->
                                     <img :src="!item.isLike ? like : selectLike"
-                                         alt=""
-                                         @click="handleLike(item)" />
-                                    <span @click="handleLike(item)"
-                                          :class="{ active: item.isLike }">{{ item.likes }}</span>
+                                         alt="" />
+                                    <span :class="{ active: item.isLike }">{{ item.likes }}</span>
                                 </li>
                                 <li class="flex-center"
                                     title="评论数量">
@@ -65,7 +66,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <notification ref="notification" />
+
                     </div>
                 </div>
             </template>
@@ -77,6 +78,8 @@
         <!-- 加载组件 -->
         <!-- 弹窗详情 -->
         <layer ref="layerDetail"> </layer>
+        <!-- 消息 -->
+        <notification ref="notification" />
     </div>
 </template>
 
@@ -132,18 +135,23 @@ export default {
         /**
          * 跳转详情
          */
-        jumpToDetail (item) {
+        showLayerDetail (item) {
+            let windowWidth = window.innerWidth
+            if (windowWidth < 756) {
+                this.jumpToDetail(item)
+                return
+            }
             this.$refs.layerDetail.openLayer(item);
         },
         // 子组件
         /**
          * 跳转详情
          */
-        jumpToDetail () {
+        jumpToDetail (item) {
             this.$router.push({
                 path: '/blog/content/detail',
                 query: {
-                    id: this.article.id,
+                    id: item.id,
                 },
             });
         },
@@ -201,7 +209,6 @@ export default {
         ul {
             padding: 0 10px;
             li {
-                margin: 0 10px;
                 height: 35px;
                 min-width: 56px;
                 color: #99a2aa;
@@ -252,9 +259,9 @@ export default {
             margin: 10px 0;
             border-radius: 5px;
             border: 1px solid #e5e9ef;
-            img {
+            .article-cover-box {
                 width: 170px;
-                height: 120px;
+                height: 100px;
             }
             .article-box {
                 flex: 1;
@@ -301,6 +308,58 @@ export default {
             }
             li:last-child {
                 border: none;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 756px) {
+    .article-list-container {
+        .article-list-tab {
+            ul {
+                li {
+                }
+                .action {
+                }
+            }
+        }
+        .article-list-content {
+        }
+        .article-item-container {
+            padding: 10px 0;
+            .article-item-info {
+                padding: 0 10px;
+                img {
+                }
+            }
+            .article-item-article {
+                margin: 0 10px;
+                .article-cover-box {
+                    width: 25%;
+                }
+            }
+            .article-item-bottom {
+                // border-top: 1px solid #f4f4f4;
+                // margin-top: 15px;
+                // li {
+                //     width: 33%;
+                //     text-align: center;
+                //     border-right: 1px solid #f4f4f4;
+                //     font-size: 16px;
+                //     color: #999;
+                //     min-height: 35px;
+                //     user-select: none;
+                //     img {
+                //         width: 18px;
+                //         margin-right: 5px;
+                //     }
+                //     .active {
+                //         color: #f8c7d3;
+                //     }
+                // }
+                // li:last-child {
+                //     border: none;
+                // }
             }
         }
     }

@@ -101,4 +101,12 @@ export default {
 .loaded {
     opacity: 1;
 }
+@media screen and (max-width: 756px) {
+    .blog-wrapper {
+        overflow: hidden;
+        .blog-content-rocket {
+            right: 5px;
+        }
+    }
+}
 </style>
