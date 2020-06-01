@@ -1,19 +1,22 @@
 <template>
     <div :class="{'sidebar-wrapper': true, 'sidebar': sidebar}">
-        <!-- 日期 -->
-        <div class="sidebar-date flex-start">
-            <img :src="calendar" />
-            <span>{{totleDays}}</span>
+        <div class="sidebar-container">
+            <!-- 日期 -->
+            <div class="sidebar-date flex-start">
+                <img :src="calendar" />
+                <span>{{totleDays}}</span>
+            </div>
+            <!-- 信息 -->
+            <div class="sidebar-info flex-start">
+                <img src="https://www.iqei.cn/content/templates/NULL/images/tx.jpg">
+                <h1>浩哥</h1>
+            </div>
+            <!-- 信息 -->
+            <div class="sidebar-info flex-start">
+                对未来有梦想，但不奢求，享受每一时刻即可，想太多毫无意义
+            </div>
         </div>
-        <!-- 信息 -->
-        <div class="sidebar-info flex-start">
-            <img src="https://www.iqei.cn/content/templates/NULL/images/tx.jpg">
-            <h1>浩哥</h1>
-        </div>
-        <!-- 信息 -->
-        <div class="sidebar-info flex-start">
-            对未来有梦想，但不奢求，享受每一时刻即可，想太多毫无意义
-        </div>
+
         <!-- 菜单 -->
         <ul class="sidebar-menu">
             <router-link to="/">
@@ -66,49 +69,53 @@ export default {
     transition: all 0.4s;
     background-color: #fff;
     overflow: hidden;
-    background: url(https://images.pexels.com/photos/1497148/pexels-photo-1497148.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500)
-        no-repeat top center;
-    padding: 20px;
     letter-spacing: 4px;
     color: #fff;
 
-    .sidebar-date {
-        margin-bottom: 20px;
-        img {
-            width: 25px;
-            margin-right: 15px;
+    .sidebar-container {
+        padding: 20px;
+        background: url(https://cdn.stocksnap.io/img-thumbs/280h/3NXCLQST85.jpg)
+            no-repeat top center;
+        background-size: cover;
+        .sidebar-date {
+            margin-bottom: 20px;
+            img {
+                width: 25px;
+                margin-right: 15px;
+            }
+            span {
+                font-weight: 900;
+                font-size: 15px;
+            }
         }
-        span {
-            font-weight: 900;
-            font-size: 15px;
-        }
-    }
-    .sidebar-info {
-        margin-bottom: 15px;
-        img {
-            width: 35px;
-            height: 35px;
-            border: 2px solid #fff;
-            border-radius: 100%;
-            margin-right: 15px;
-        }
-        h1 {
-            font-weight: 600;
-            font-size: 24px;
+        .sidebar-info {
+            margin-bottom: 15px;
+            img {
+                width: 35px;
+                height: 35px;
+                border: 2px solid #fff;
+                border-radius: 100%;
+                margin-right: 15px;
+            }
+            h1 {
+                font-weight: 600;
+                font-size: 24px;
+            }
         }
     }
     .sidebar-menu {
         a {
-            color: #fff !important;
+            color: #464646 !important;
         }
         li {
             padding: 10px 0;
             background: url(~@/assets/images/rightarrow.png) no-repeat center
-                right;
-            background-size: 30px;
+                right 15px;
+            background-size: 10px;
+            padding-left: 40px;
 
             img {
-                width: 25px;
+                width: 20px;
                 margin-right: 20px;
             }
         }

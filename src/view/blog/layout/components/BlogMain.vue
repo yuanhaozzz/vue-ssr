@@ -62,6 +62,7 @@ export default {
             position: relative;
             overflow-y: scroll;
             height: 100%;
+            padding-bottom: 100px;
         }
         .test {
             min-height: 100px;

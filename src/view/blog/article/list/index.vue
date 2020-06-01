@@ -205,7 +205,9 @@ export default {
         border-radius: 5px;
         background: #fff;
         background-color: #fff;
-
+        position: sticky;
+        top: 0;
+        left: 0;
         ul {
             padding: 0 10px;
             li {

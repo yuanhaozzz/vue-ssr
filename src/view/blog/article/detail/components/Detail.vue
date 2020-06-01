@@ -320,6 +320,13 @@ export default {
         p {
             margin: 5px 0;
         }
+        ul {
+            list-style: disc;
+            padding-left: 24px;
+            li {
+                list-style: disc;
+            }
+        }
     }
 }
 </style>
