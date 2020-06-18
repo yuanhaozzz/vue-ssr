@@ -20,7 +20,7 @@
                     <!-- 子组件 -->
                     <div class="article-item-container">
                         <div class="article-item-info flex-start">
-                            <img src="https://www.wnooo.cn/content/uploadfile/201905/thum52-37521557483025.jpg" />
+                            <img src="http://yuanhao-web.cn/server/uploads/OIP.jpg" />
                             <div class="article-item-info-box">
                                 <h4>浩哥</h4>
                                 <span>{{ item.releaseTime | formatDate }}</span>
