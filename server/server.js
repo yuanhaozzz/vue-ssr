@@ -84,8 +84,8 @@ app.get(
     isProd
         ? render
         : (req, res) => {
-              readyPromise.then(() => render(req, res));
-          }
+            readyPromise.then(() => render(req, res));
+        }
 );
 
 app.listen(3001, () => {

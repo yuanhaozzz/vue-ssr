@@ -66,11 +66,11 @@ module.exports = {
             isProd
                 ? {}
                 : {
-                      test: /\.js$/,
-                      loader: 'eslint-loader',
-                      enforce: 'pre',
-                      include: [path.resolve(__dirname, '../src')], // 指定检查的目录
-                  },
+                    test: /\.js$/,
+                    loader: 'eslint-loader',
+                    enforce: 'pre',
+                    include: [path.resolve(__dirname, '../src')], // 指定检查的目录
+                },
         ],
     },
     stats: {
