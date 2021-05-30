@@ -20,9 +20,9 @@ module.exports = merge(config, {
     plugins: isProd
         ? [
             new VueSSRClientPlugin(),
-            new BundleAnalyzerPlugin({
-                analyzerPort: 8889
-            })
+            // new BundleAnalyzerPlugin({
+            //     analyzerPort: 8889
+            // })
         ]
         : [
             new VueSSRClientPlugin(),
