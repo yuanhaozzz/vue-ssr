@@ -4,10 +4,12 @@ node_js:
     - '6'
  
 # Travis-CI Caching
-cache:
-  directories:
-    - node_modules
+# cache:
+#   directories:
+#     - node_modules
  
+before_install:
+  - rm -rf node_modules
  
 # S: Build Lifecycle
 install:
