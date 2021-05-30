@@ -1,15 +1,13 @@
 language: node_js
 # nodejs版本
 node_js: 
-    - '6'
+    - '14'
  
 # Travis-CI Caching
 # cache:
 #   directories:
 #     - node_modules
  
-before_install:
-  - rm -rf node_modules
  
 # S: Build Lifecycle
 install:
