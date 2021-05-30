@@ -11,7 +11,7 @@ cache:
  
 # S: Build Lifecycle
 install:
-  - cnpm install
+  - npm install
  
 before_script:
  
