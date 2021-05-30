@@ -8,6 +8,7 @@ let isProd = process.env.NODE_ENV === 'production';
 let resolve = (pathname) => path.resolve(__dirname, pathname);
 let templatePath = resolve('../public/template.html');
 
+var compression = require('compression');
 let renderer, readyPromise;
 
 function createRenderer(bundle, options) {
@@ -76,6 +77,7 @@ function render(req, res) {
     });
 }
 
+app.use(compression());
 app.use(express.static('dist/client', { maxAge: 1000000 }));
 app.use(express.static('dist/server', { maxAge: 1000000 }));
 

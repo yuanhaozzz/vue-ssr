@@ -15,13 +15,18 @@ module.exports = {
     mode: isProd ? 'production' : 'development',
     devtool: isProd ? false : '#cheap-module-source-map',
     entry: {
-        app: ['@babel/polyfill', findToFilePath('../src/entry-client.js')],
+        app: [findToFilePath('../src/entry-client.js')],
     },
     resolve: {
         alias: {
             '@': findToFilePath('../src'),
         },
         extensions: ['.js', '.vue', '.less'],
+    },
+    externals: {
+        'vue': 'Vue',
+        "view-design": 'iview',
+        "iview": 'ViewUI',
     },
     module: {
         rules: [
@@ -33,7 +38,14 @@ module.exports = {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 include: [findToFilePath('../src')],
-                loader: 'babel-loader',
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            cacheDirectory: true
+                        }
+                    }
+                ]
             },
             {
                 test: /\.(le|c)ss$/,

@@ -6,6 +6,7 @@ let findToFilePath = pathname => path.resolve(__dirname, pathname);
 let isProd = process.env.NODE_ENV === 'production';
 // webpack 插件提示
 var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = merge(config, {
     target: 'web',
@@ -18,7 +19,10 @@ module.exports = merge(config, {
     },
     plugins: isProd
         ? [
-            new VueSSRClientPlugin()
+            new VueSSRClientPlugin(),
+            new BundleAnalyzerPlugin({
+                analyzerPort: 8889
+            })
         ]
         : [
             new VueSSRClientPlugin(),
