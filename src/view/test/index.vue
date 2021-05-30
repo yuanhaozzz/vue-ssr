@@ -4,7 +4,7 @@
       <div class="return">
         <span style="color: #1989fa">&lt;&ensp;返回</span>
       </div>
-      <div class="title">选课测试测试</div>
+      <div class="title">选课试</div>
       <div class="search">1234</div>
     </div>
     <div class="search">1234</div>
