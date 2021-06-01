@@ -3,6 +3,7 @@ const merge = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals');
 const baseConfig = require('./webpack.base.js');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 let findToFilePath = pathname => {
     return path.resolve(__dirname, pathname);
@@ -21,7 +22,54 @@ module.exports = merge(baseConfig, {
         // filename: 'server',
         libraryTarget: 'commonjs2'
     },
-
+    module: {
+        rules: [
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+            },
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                include: [findToFilePath('../src')],
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            cacheDirectory: true
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(le|c)ss$/,
+                use: [
+                    'css-loader',
+                    'postcss-loader',
+                    'less-loader',
+                ],
+            },
+            {
+                test: /\.(png|woff|woff2|eot|ttf|svg|jpg|gif|svg)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000,
+                            name: () => {
+                                if (!isProd) {
+                                    return '[name].[ext]';
+                                }
+                                return '[name]_[hash:8].[ext]';
+                            },
+                            outputPath: 'images/',
+                            publicPath: '/blog/images',
+                        },
+                    },
+                ],
+            },
+        ]
+    },
     // https://webpack.js.org/configuration/externals/#function
     // https://github.com/liady/webpack-node-externals
     // 外置化应用程序依赖模块。可以使服务器构建速度更快，
@@ -35,5 +83,8 @@ module.exports = merge(baseConfig, {
     // 这是将服务器的整个输出
     // 构建为单个 JSON 文件的插件。
     // 默认文件名为 `vue-ssr-server-bundle.json`
-    plugins: [new VueSSRServerPlugin()]
+    plugins: [
+        new VueSSRServerPlugin(),
+        new VueLoaderPlugin()
+    ]
 });
