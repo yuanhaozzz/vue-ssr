@@ -4,7 +4,7 @@ let config = require('./webpack.base.js');
 const merge = require('webpack-merge');
 let findToFilePath = pathname => path.resolve(__dirname, pathname);
 let isProd = process.env.NODE_ENV === 'production';
-// webpack 插件提示
+// webpack 插件提
 var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const webpack = require('webpack');
